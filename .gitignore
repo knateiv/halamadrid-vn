@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Build outputs
+dist/
+frontend/dist/
+build/
+
+# Vercel & Environment & IDE
+.vercel
+frontend/.vercel
+.env
+.env.local
+.env.*.local
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

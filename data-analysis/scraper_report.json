@@ -1,0 +1,370 @@
+{
+  "total": 73,
+  "assets": {
+    "raul-asencio": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg/500px-2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 117067,
+      "path": "/images/players/raul-asencio.jpg"
+    },
+    "andriy-lunin": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Andriy_Lunin%2C_Real_Madrid%2C_2022.jpg/500px-Andriy_Lunin%2C_Real_Madrid%2C_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 87266,
+      "path": "/images/players/andriy-lunin.jpg"
+    },
+    "thibaut-courtois": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/FC_RB_Salzburg_versus_Real_Madrid_%28Testspiel%2C_7._August_2019%29_03.jpg/500px-FC_RB_Salzburg_versus_Real_Madrid_%28Testspiel%2C_7._August_2019%29_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 156973,
+      "path": "/images/players/thibaut-courtois.jpg"
+    },
+    "sergio-mestre": {
+      "source": "upgraded_real_madrid_kit_cached",
+      "bytes": 107062,
+      "path": "/images/players/sergio-mestre.jpg"
+    },
+    "javier-navarro": {
+      "source": "upgraded_real_madrid_kit_cached",
+      "bytes": 85151,
+      "path": "/images/players/javier-navarro.jpg"
+    },
+    "eder-militao": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/FC_RB_Salzburg_gegen_Real_Madrid_%28Testspiel%2C_7._August_2019%29_33.jpg/500px-FC_RB_Salzburg_gegen_Real_Madrid_%28Testspiel%2C_7._August_2019%29_33.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 122733,
+      "path": "/images/players/eder-militao.jpg"
+    },
+    "dean-huijsen": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Dean_Huijsen_2024.jpg/330px-Dean_Huijsen_2024.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 85748,
+      "path": "/images/players/dean-huijsen.jpg"
+    },
+    "trent-alexander-arnold": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Trent_Alexander-Arnold_2018.jpg/330px-Trent_Alexander-Arnold_2018.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 96637,
+      "path": "/images/players/trent-alexander-arnold.jpg"
+    },
+    "ibrahima-konate": {
+      "source": "real_madrid_kit_composited (score=-140, https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Ibrahima_Konate_France_v_Senegal_16_June_2026-516_%28cropped%29.jpg/330px-Ibrahima_Konate_France_v_Senegal_16_June_2026-516_%28cropped%29.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 119221,
+      "path": "/images/players/ibrahima-konate.jpg"
+    },
+    "marc-cucurella": {
+      "source": "real_madrid_kit_composited (score=-290, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Marc_Cucurella_France_v_Spain_7.24.26-149_%28cropped%29.jpg/330px-Marc_Cucurella_France_v_Spain_7.24.26-149_%28cropped%29.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 146084,
+      "path": "/images/players/marc-cucurella.jpg"
+    },
+    "antonio-rudiger": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg/500px-2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 117067,
+      "path": "/images/players/antonio-rudiger.jpg"
+    },
+    "ferland-mendy": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg/500px-2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 117067,
+      "path": "/images/players/ferland-mendy.jpg"
+    },
+    "alvaro-carreras": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/%C3%81lvaroCarreras.jpg/330px-%C3%81lvaroCarreras.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 113738,
+      "path": "/images/players/alvaro-carreras.jpg"
+    },
+    "denzel-dumfries": {
+      "source": "real_madrid_kit_composited (score=10, https://upload.wikimedia.org/wikipedia/commons/b/b7/Edison_ndreca_inter_egnati_%28cropped_Denzel_Dumfries%29.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled)",
+      "bytes": 77380,
+      "path": "/images/players/denzel-dumfries.jpg"
+    },
+    "joan-martinez": {
+      "source": "upgraded_real_madrid_kit_cached",
+      "bytes": 88229,
+      "path": "/images/players/joan-martinez.jpg"
+    },
+    "federico-valverde": {
+      "source": "commons_real_madrid_kit (score=170, https://upload.wikimedia.org/wikipedia/commons/3/37/Federico_Valverde_Real_Madrid_2018.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)",
+      "bytes": 114433,
+      "path": "/images/players/federico-valverde.jpg"
+    },
+    "eduardo-camavinga": {
+      "source": "commons_real_madrid_kit (score=90, https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Ofrenda_de_la_Liga_y_la_Champions-13-L.Mill%C3%A1n_%2852109790215%29.jpg/500px-Ofrenda_de_la_Liga_y_la_Champions-13-L.Mill%C3%A1n_%2852109790215%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 106484,
+      "path": "/images/players/eduardo-camavinga.jpg"
+    },
+    "jude-bellingham": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Jude_Bellingham_-_240422_190535.jpg/500px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Jude_Bellingham_-_240422_190535.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 88422,
+      "path": "/images/players/jude-bellingham.jpg"
+    },
+    "aurelien-tchouameni": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg/500px-2025_04_26_Final_de_la_Copa_del_Rey_-_54482387776_%28Elenco_do_Real_Madrid%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 117067,
+      "path": "/images/players/aurelien-tchouameni.jpg"
+    },
+    "arda-guler": {
+      "source": "real_madrid_kit_composited (score=10, https://upload.wikimedia.org/wikipedia/commons/2/26/Derbide_Fenerbah%C3%A7e_Yedek_Oyuncu_Arda_G%C3%BCler_%282021-22_S%C3%BCper_Lig_-_Cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)",
+      "bytes": 71879,
+      "path": "/images/players/arda-guler.jpg"
+    },
+    "thiago-pitarch": {
+      "source": "upgraded_real_madrid_kit_cached",
+      "bytes": 162883,
+      "path": "/images/players/thiago-pitarch.jpg"
+    },
+    "jorge-cestero": {
+      "source": "upgraded_real_madrid_kit_cached",
+      "bytes": 98587,
+      "path": "/images/players/jorge-cestero.jpg"
+    },
+    "bernardo-silva": {
+      "source": "real_madrid_kit_composited (score=90, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/El_baile_de_%C2%ABBlanco_y_Negro%C2%BB%2C_en_el_Teatro_Real%2C_la_noche_del_30%2C_de_M%C3%A9ndez_Bringa.jpg/500px-El_baile_de_%C2%ABBlanco_y_Negro%C2%BB%2C_en_el_Teatro_Real%2C_la_noche_del_30%2C_de_M%C3%A9ndez_Bringa.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 173584,
+      "path": "/images/players/bernardo-silva.jpg"
+    },
+    "sergio-martinez": {
+      "source": "real_madrid_kit_composited (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/El_Real_Madrid_celebra_en_Cibeles_su_d%C3%A9cima_Copa_de_Europa_de_Baloncesto_02.jpg/500px-El_Real_Madrid_celebra_en_Cibeles_su_d%C3%A9cima_Copa_de_Europa_de_Baloncesto_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 127274,
+      "path": "/images/players/sergio-martinez.jpg"
+    },
+    "vinicius-junior": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Vin%C3%ADcius_J%C3%BAnior_-_Real_Madrid_CF_%282024-25%29.jpg/500px-Vin%C3%ADcius_J%C3%BAnior_-_Real_Madrid_CF_%282024-25%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 100413,
+      "path": "/images/players/vinicius-junior.jpg"
+    },
+    "kylian-mbappe": {
+      "source": "commons_real_madrid_kit (score=90, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Kylian_Mbapp%C3%A9_against_M%C3%A1laga%2C_match_valid_for_the_third_round_of_La_Liga_on_August_30%2C_2026.png/500px-Kylian_Mbapp%C3%A9_against_M%C3%A1laga%2C_match_valid_for_the_third_round_of_La_Liga_on_August_30%2C_2026.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 80014,
+      "path": "/images/players/kylian-mbappe.jpg"
+    },
+    "endrick": {
+      "source": "real_madrid_kit_composited (score=-290, https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Endrick-Palmeiras-Liverpool-abr24.jpg/330px-Endrick-Palmeiras-Liverpool-abr24.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 111822,
+      "path": "/images/players/endrick.jpg"
+    },
+    "rodrygo": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/F2_real_madrid.jpg/500px-F2_real_madrid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 83740,
+      "path": "/images/players/rodrygo.jpg"
+    },
+    "carlos-espi": {
+      "source": "upgraded_real_madrid_kit_cached",
+      "bytes": 87376,
+      "path": "/images/players/carlos-espi.jpg"
+    },
+    "brahim-diaz": {
+      "source": "real_madrid_kit_composited (score=-140, https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Brahim_Diaz_Morocco_v_Norway_7_June_2026-36.jpg/330px-Brahim_Diaz_Morocco_v_Norway_7_June_2026-36.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 101195,
+      "path": "/images/players/brahim-diaz.jpg"
+    },
+    "yan-diomande": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Yan_Diomande_Cote_D%27Ivoire_v_Ecuador_14_June_2026-17_%28cropped%29.jpg/330px-Yan_Diomande_Cote_D%27Ivoire_v_Ecuador_14_June_2026-17_%28cropped%29.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 105822,
+      "path": "/images/players/yan-diomande.jpg"
+    },
+    "franco-mastantuono": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Franco_Mastantuono_in_2025_%28cropped%29.jpg/330px-Franco_Mastantuono_in_2025_%28cropped%29.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 86578,
+      "path": "/images/players/franco-mastantuono.jpg"
+    },
+    "ferenc-puskas": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Amsterdam_tegen_Real_Madrid_1-4_in_het_Olympisch_Stadion_te_Amsterdam%2C_Bestanddeelnr_910-4820.jpg/500px-Amsterdam_tegen_Real_Madrid_1-4_in_het_Olympisch_Stadion_te_Amsterdam%2C_Bestanddeelnr_910-4820.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 102915,
+      "path": "/images/players/ferenc-puskas.jpg"
+    },
+    "alfredo-di-stefano": {
+      "source": "commons_real_madrid_kit (score=170, https://upload.wikimedia.org/wikipedia/commons/d/de/Di_stefano_real_madrid_cf_%28cropped%29.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)",
+      "bytes": 159918,
+      "path": "/images/players/alfredo-di-stefano.jpg"
+    },
+    "paco-gento": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/FC_Z%C3%BCrich_-_Real_Madrid_-_22_April_1964.jpg/500px-FC_Z%C3%BCrich_-_Real_Madrid_-_22_April_1964.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 137198,
+      "path": "/images/players/paco-gento.jpg"
+    },
+    "raymond-kopa": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Raymond_Kopa%2C_Estadio%2C_1962-03-01.jpg/330px-Raymond_Kopa%2C_Estadio%2C_1962-03-01.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail)",
+      "bytes": 154452,
+      "path": "/images/players/raymond-kopa.jpg"
+    },
+    "santillana": {
+      "source": "commons_real_madrid_kit (score=90, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Madrid_%28Comunidad%29%2C_a%C3%A9reas_1985_26.jpg/500px-Madrid_%28Comunidad%29%2C_a%C3%A9reas_1985_26.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 107965,
+      "path": "/images/players/santillana.jpg"
+    },
+    "pirri": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Ajax_tegen_Real_Madrid_1-1._Elftal_Real_Madrid_Junquera%2C_Calpe%2C_De_Felipe_%2C_Sa%2C_Bestanddeelnr_920-7233.jpg/500px-Ajax_tegen_Real_Madrid_1-1._Elftal_Real_Madrid_Junquera%2C_Calpe%2C_De_Felipe_%2C_Sa%2C_Bestanddeelnr_920-7233.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 110634,
+      "path": "/images/players/pirri.jpg"
+    },
+    "amancio-amaro": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Elftal_Real_Madrid_arriveert_op_Schiphol%2C_vlnr_Amancio%2C_trainer_Mu%C3%B1oz%2C_Zoco%2C_Bestanddeelnr_925-0983_%28Amancio_cropped%29.jpg/500px-Elftal_Real_Madrid_arriveert_op_Schiphol%2C_vlnr_Amancio%2C_trainer_Mu%C3%B1oz%2C_Zoco%2C_Bestanddeelnr_925-0983_%28Amancio_cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 127402,
+      "path": "/images/players/amancio-amaro.jpg"
+    },
+    "emilio-butragueno": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Emilio_Butrague%C3%B1o%2C_Institutional_Relations_Director%2C_Real_Madrid_C.F._%2816543792924%29.jpg/500px-Emilio_Butrague%C3%B1o%2C_Institutional_Relations_Director%2C_Real_Madrid_C.F._%2816543792924%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 93024,
+      "path": "/images/players/emilio-butragueno.jpg"
+    },
+    "juanito": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Minuto_de_silencio_por_Juanito_Navarro_%285353776229%29.jpg/500px-Minuto_de_silencio_por_Juanito_Navarro_%285353776229%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 134604,
+      "path": "/images/players/juanito.jpg"
+    },
+    "hugo-sanchez": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Real_Madrid_in_Oisterwijk_Hugo_Sanchez_%2C_kop%2C_Bestanddeelnr_934-2327.jpg/500px-Real_Madrid_in_Oisterwijk_Hugo_Sanchez_%2C_kop%2C_Bestanddeelnr_934-2327.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 126549,
+      "path": "/images/players/hugo-sanchez.jpg"
+    },
+    "manolo-sanchis": {
+      "source": "real_madrid_kit_composited (score=10, https://upload.wikimedia.org/wikipedia/commons/e/e8/Un_sue%C3%B1ooooo_-_Sanch%C3%ADs_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)",
+      "bytes": 80362,
+      "path": "/images/players/manolo-sanchis.jpg"
+    },
+    "fernando-hierro": {
+      "source": "commons_real_madrid_kit (score=90, https://upload.wikimedia.org/wikipedia/commons/9/99/Juan_Van_Halen_y_Sart%C3%AD_%28Museo_Naval_de_Madrid%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)",
+      "bytes": 101903,
+      "path": "/images/players/fernando-hierro.jpg"
+    },
+    "raul-gonzalez": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Ra%C3%BAl_Gonz%C3%A1lez_in_Real_Madrid_2009.jpg/500px-Ra%C3%BAl_Gonz%C3%A1lez_in_Real_Madrid_2009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 147905,
+      "path": "/images/players/raul-gonzalez.jpg"
+    },
+    "fernando-redondo": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Palacio_real_%282%29.jpg/500px-Palacio_real_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 98649,
+      "path": "/images/players/fernando-redondo.jpg"
+    },
+    "roberto-carlos": {
+      "source": "commons_real_madrid_kit (score=90, https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Historia_de_la_Villa_y_Corte_de_Madrid_%281860%29_%2814800659073%29.jpg/500px-Historia_de_la_Villa_y_Corte_de_Madrid_%281860%29_%2814800659073%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 204076,
+      "path": "/images/players/roberto-carlos.jpg"
+    },
+    "zinedine-zidane": {
+      "source": "real_madrid_kit_composited (score=20, https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Zinedine_Zidane%27s_1998_Ballon_d%27Or_trophy%2C_Real_Madrid_Museum%2C_Santiago_Bernab%C3%A9u%2C_Madrid%2C_Spain_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg/500px-Zinedine_Zidane%27s_1998_Ballon_d%27Or_trophy%2C_Real_Madrid_Museum%2C_Santiago_Bernab%C3%A9u%2C_Madrid%2C_Spain_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 95466,
+      "path": "/images/players/zinedine-zidane.jpg"
+    },
+    "iker-casillas": {
+      "source": "commons_real_madrid_kit (score=100, https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Real_Madrid_vs_Juventus%2C_24_October_2013%2C_Champions_League_-_Giorgio_Chiellini_%26_Iker_Casillas.jpg/500px-Real_Madrid_vs_Juventus%2C_24_October_2013%2C_Champions_League_-_Giorgio_Chiellini_%26_Iker_Casillas.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 156381,
+      "path": "/images/players/iker-casillas.jpg"
+    },
+    "ronaldo-nazario": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Ronaldo_Real_Madrid.jpg/500px-Ronaldo_Real_Madrid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 110274,
+      "path": "/images/players/ronaldo-nazario.jpg"
+    },
+    "luis-figo": {
+      "source": "real_madrid_kit_composited (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/FigoBallond%27Or2000.jpg/500px-FigoBallond%27Or2000.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 104888,
+      "path": "/images/players/luis-figo.jpg"
+    },
+    "david-beckham": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Beckham_shirt_Real_Madrid.jpg/500px-Beckham_shirt_Real_Madrid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 108938,
+      "path": "/images/players/david-beckham.jpg"
+    },
+    "claude-makelele": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Real_Madrid_vs_Olimpia_2002-12-03.png/500px-Real_Madrid_vs_Olimpia_2002-12-03.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 64020,
+      "path": "/images/players/claude-makelele.jpg"
+    },
+    "cristiano-ronaldo": {
+      "source": "commons_real_madrid_kit (score=90, https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Cristiano_Ronaldo_Madrid.jpg/500px-Cristiano_Ronaldo_Madrid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 235364,
+      "path": "/images/players/cristiano-ronaldo.jpg"
+    },
+    "karim-benzema": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Karim_Benzema_wearing_Real_Madrid_home_kit_2021-2022.jpg/500px-Karim_Benzema_wearing_Real_Madrid_home_kit_2021-2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 96410,
+      "path": "/images/players/karim-benzema.jpg"
+    },
+    "guti": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Real_Madrid_players_worm_up_before_game.JPG/500px-Real_Madrid_players_worm_up_before_game.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 131891,
+      "path": "/images/players/guti.jpg"
+    },
+    "luka-modric": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/Luka_Modri%C4%87_Real_Madrid.jpg/500px-Luka_Modri%C4%87_Real_Madrid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 125146,
+      "path": "/images/players/luka-modric.jpg"
+    },
+    "toni-kroos": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/FC_RB_Salzburg_gegen_Real_Madrid_%28Testspiel%2C_7._August_2019%29_45.jpg/500px-FC_RB_Salzburg_gegen_Real_Madrid_%28Testspiel%2C_7._August_2019%29_45.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 142833,
+      "path": "/images/players/toni-kroos.jpg"
+    },
+    "sergio-ramos": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Sergio_Ramos_Real_Madrid-LA_Galaxy_2011.jpg/500px-Sergio_Ramos_Real_Madrid-LA_Galaxy_2011.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 93970,
+      "path": "/images/players/sergio-ramos.jpg"
+    },
+    "marcelo": {
+      "source": "commons_real_madrid_kit (score=170, https://upload.wikimedia.org/wikipedia/commons/2/23/Marcelo_in_2009-10_Real_Madrid.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)",
+      "bytes": 92564,
+      "path": "/images/players/marcelo.jpg"
+    },
+    "gareth-bale": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Real_Madrid_vs_Atl%C3%A9tico_Madrid_-_28_September_2013_-_Arda_Turan_and_Gareth_Bale.JPG/500px-Real_Madrid_vs_Atl%C3%A9tico_Madrid_-_28_September_2013_-_Arda_Turan_and_Gareth_Bale.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 123115,
+      "path": "/images/players/gareth-bale.jpg"
+    },
+    "casemiro": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/Al_Jazira_Club_v_Real_Madrid_CF%2C_13_December_2017_-_21.jpg/500px-Al_Jazira_Club_v_Real_Madrid_CF%2C_13_December_2017_-_21.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 116723,
+      "path": "/images/players/casemiro.jpg"
+    },
+    "pepe": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Real_Madrid_Pepe_Kaka_Ronaldo.JPG/500px-Real_Madrid_Pepe_Kaka_Ronaldo.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 127419,
+      "path": "/images/players/pepe.jpg"
+    },
+    "keylor-navas": {
+      "source": "commons_real_madrid_kit (score=250, https://upload.wikimedia.org/wikipedia/commons/5/59/Real_Madrid_C.F._the_Winner_Of_The_Champions_League_in_2018_%281%29_%28Marcelo%2C_Navas_e_Theo_Hernadez%29%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)",
+      "bytes": 176340,
+      "path": "/images/players/keylor-navas.jpg"
+    },
+    "xabi-alonso": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Xabi_Alonso_%28Real_Valladolid-Real_Madrid%29.jpg/500px-Xabi_Alonso_%28Real_Valladolid-Real_Madrid%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 168680,
+      "path": "/images/players/xabi-alonso.jpg"
+    },
+    "angel-di-maria": {
+      "source": "commons_real_madrid_kit (score=100, https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Real_Madrid_vs_Juventus%2C_24_October_2013_Champions_League_29.JPG/500px-Real_Madrid_vs_Juventus%2C_24_October_2013_Champions_League_29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 124683,
+      "path": "/images/players/angel-di-maria.jpg"
+    },
+    "santiago-bernabeu": {
+      "source": "commons_real_madrid_kit (score=250, https://upload.wikimedia.org/wikipedia/commons/9/9a/Aankomst_Real_Madrid_op_Schiphol._Santiago_Bernabeu_%28cropped%29.jpg?utm_source=es.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled)",
+      "bytes": 70818,
+      "path": "/images/players/santiago-bernabeu.jpg"
+    },
+    "mesut-ozil": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/%C3%96zil_al_corner_-_Real_Madrid_Ajax.jpg/500px-%C3%96zil_al_corner_-_Real_Madrid_Ajax.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 131310,
+      "path": "/images/players/mesut-ozil.jpg"
+    },
+    "miguel-munoz": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Elftal_Real_Madrid_arriveert_op_Schiphol%2C_vlnr_Amancio%2C_trainer_Mu%C3%B1oz%2C_Zoco%2C_Bestanddeelnr_925-0983_%28cropped_Munoz%29.jpg/500px-Elftal_Real_Madrid_arriveert_op_Schiphol%2C_vlnr_Amancio%2C_trainer_Mu%C3%B1oz%2C_Zoco%2C_Bestanddeelnr_925-0983_%28cropped_Munoz%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 123440,
+      "path": "/images/players/miguel-munoz.jpg"
+    },
+    "carlo-ancelotti": {
+      "source": "commons_real_madrid_kit (score=90, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Ofrenda_de_la_Liga_y_la_Champions-12-L.Mill%C3%A1n_%2852108254877%29.jpg/500px-Ofrenda_de_la_Liga_y_la_Champions-12-L.Mill%C3%A1n_%2852108254877%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 109782,
+      "path": "/images/players/carlo-ancelotti.jpg"
+    },
+    "vicente-del-bosque": {
+      "source": "commons_real_madrid_kit (score=10, https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Saque_de_honor_del_II_Torneo_de_F%C3%BAtbol_Cadete_Villa_de_Alalpardo_que_homenajea_a_Vicente_del_Bosque_%2833581299974%29.jpg/500px-Saque_de_honor_del_II_Torneo_de_F%C3%BAtbol_Cadete_Villa_de_Alalpardo_que_homenajea_a_Vicente_del_Bosque_%2833581299974%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 120308,
+      "path": "/images/players/vicente-del-bosque.jpg"
+    },
+    "jose-mourinho": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Jos%C3%A9_Mourinho_at_Club_Am%C3%A9rica_%26_Real_Madrid_friendly_match_2010-08-04.JPG/500px-Jos%C3%A9_Mourinho_at_Club_Am%C3%A9rica_%26_Real_Madrid_friendly_match_2010-08-04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 94752,
+      "path": "/images/players/jose-mourinho.jpg"
+    },
+    "florentino-perez": {
+      "source": "commons_real_madrid_kit (score=170, https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Real_Madrid%2C_campe%C3%B3n_de_la_Champions_%2827282348212%29.jpg/500px-Real_Madrid%2C_campe%C3%B3n_de_la_Champions_%2827282348212%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail)",
+      "bytes": 111640,
+      "path": "/images/players/florentino-perez.jpg"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+# BỘ NHỚ NGỮ CẢNH DỰ ÁN (AGENT MEMORY)
+
+## 1. Tổng quan & Mục tiêu Dự án
+- **Tên dự án**: HalaMadrid VN — All-Time Real Madrid Encyclopedia & Data Analysis Platform (1902–2026).
+- **Phiên bản**: V3.0 Royal Visual & Walkout Edition.
+
+## 2. Quyết định Kiến trúc & Tech Stack (ADR)
+- **Typography**: Đồng bộ **100% duy nhất 1 bộ font `'Montserrat'`** hỗ trợ đầy đủ tiếng Việt cho mọi phần tử DOM và SVG.
+- **Giao diện Sáng / Tối (Dual-Theme System)**:
+  - **Light Mode (`☀️ Bernabéu White`)**: Nền trắng ngọc trai (`#F8FAFC` / `#FFFFFF`), thẻ bài trắng viền vàng kim (`#D4AF37`), chữ xanh Navy đậm (`#0F172A`), giữ nguyên độ tương phản trắng trên các mặt sân cỏ và ảnh chân dung thông qua lớp `.keep-dark-surface`.
+  - **Dark Mode (`🌙 Champions Night`)**: Nền xanh đen đêm Champions League (`#060A17`), kính mờ `backdrop-blur-xl`, ánh sáng Neon Gold & Royal Blue.
+- **3D Walkout & Signature Celebration Engine**: Xây dựng tại `src/components/PlayerWalkoutModal.tsx` kết hợp HTML5 `<canvas>` Golden Confetti, CSS 3D `@keyframes walkoutEnter`, Web Audio API Fanfare synthesizer và kịch bản ăn mừng riêng cho từng ngôi sao.
+
+## 3. Nhật ký Thay đổi & Xử lý Lỗi (Changelog & Fixes)
+- **[2026-10-26 22:47 - Agent 1]**: Nâng cấp và chạy lại `fetch_official_madrid_data.py` với bộ lọc Wikimedia Commons `"Real Madrid" filetype:bitmap` và khung áo đấu Hoàng gia cho 73/73 nhân vật.
+- **[2026-10-26 22:51 - Agent 2 & Agent 3]**: Tạo `PlayerWalkoutModal.tsx`, `TiltCard.tsx`, `AnimatedCounter.tsx`, đồng bộ font `'Montserrat'`, thêm nút chuyển đổi `☀️ Sáng / 🌙 Tối` trên Header và hiệu ứng `Interactive Pitch Glow`.
+- **[2026-10-26 22:55 - Agent 4]**: Chạy `qa_audit_assets.py` (74/74 ảnh đạt chuẩn) và `npm run build` đạt `0 errors` (`built in 1.86s`).
+- **[2026-10-27 00:58 - Image Sync & 2-Column Dossier Upgrade]**: Quét trực tiếp 73 file ảnh người dùng cập nhật trong `frontend/public/images/players/` bằng `sync_local_images.py` (khớp 67/67 cầu thủ & huyền thoại + 7/7 chủ tịch & HLV, tuyệt đối không ghi đè ảnh của người dùng), áp dụng `object-fit: cover` và `object-position: top center` trên `PlayerAvatar.tsx`, và nâng cấp `PlayerWalkoutModal.tsx` thành bố cục 2 cột rõ nét (Trái: Ảnh chân dung lớn sắc nét — Phải: Hồ sơ, tiểu sử, thông số thống kê & Biểu đồ Radar 6 trục SVG).
+- **[2026-10-27 01:12 - UI Polish V3.2 (Clean Profile Modal, Light Mode Fix & Single-Line Header)]**: Xóa bỏ hoàn toàn chữ/hiệu ứng Walkout & ăn mừng trên toàn bộ ứng dụng, đổi nhãn nút thành `"Xem Hồ Sơ"`, bổ sung hệ thống class `.profile-modal-surface`, `.profile-modal-box`, `.profile-modal-title`, `.profile-modal-body` giúp bảng Hồ sơ ở Light Mode có nền trắng `#FFFFFF` viền Vàng Hoàng gia `#D4AF37` và chữ `#0F172A` / `#334155` cực kỳ sắc nét, đồng thời thiết kế lại thanh Header 1 dòng thẳng hàng (`whitespace-nowrap`) với 6 mục điều hướng rút gọn và nút `☀️ Sáng` / `🌙 Tối`, `🌐 VN` / `🌐 EN`.
+- **[2026-10-27 11:46 - V4.0 Royal Sidebar Dashboard, Deep Timeline, 7-Stage Bernabéu & Three-Peat UCL Dynasty]**: Chuyển thanh điều hướng sang Left Sidebar cố định (`w-72`, có scroll-spy tự động sáng viền vàng), mở rộng chiều sâu lịch sử 7 kỷ nguyên (cột mốc ngày/tháng/năm, sơ đồ chiến thuật, lãnh đạo, trận đấu biểu tượng, kỷ lục) và 7 giai đoạn kiến trúc Santiago Bernabéu (1912–2026: từ Campo de O'Donnell đến New Bernabéu 360° với Mái vòm 15 phút, Halo LED 360° & Hầm ngầm Hypogeum 6 tầng sâu 30m), bổ sung thêm 7 huyền thoại Ăn 3 C1 (`isco`, `raphael-varane`, `dani-carvajal`, `marco-asensio`, `lucas-vazquez`, `nacho-fernandez`, `mateo-kovacic` nâng tổng số lên 74 cầu thủ/huyền thoại + 7 chủ tịch/HLV = 80 ảnh trong `public/images/players/`) và tách rõ Phân hệ 3 thành Phần 1 (Đội hình 2026/27) & Phần 2 (Đội hình Huyền thoại Ăn 3 C1 2015–2018 & Đại sảnh Huyền thoại).
+- **[2026-10-27 12:40 - V5.0 Royal Motion Design System & 12-Field Portal Modal]**:
+  - **Agent 1 (Architect)**: Kiểm toán toàn bộ `frontend/src`, phân loại P0/P1/P2 và định nghĩa bộ Motion Tokens chuẩn trong `index.css` & `tailwind.config.js` (`--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1)`, `--ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1)`, `--ease-spring-subtle: cubic-bezier(0.34, 1.56, 0.64, 1)`).
+  - **Agent 2 (Coder)**: Triển khai chuyển động đồng bộ trên cả 6 phân hệ: thanh chỉ báo vàng trượt mượt trên Sidebar `w-72`, hiệu ứng `section-reveal` + `card-stagger` khi chuyển đổi 7 Kỷ nguyên & 7 Giai đoạn Bernabéu, hiệu ứng mở Modal Portal 2 cột (`createPortal(..., document.body)`) kèm đa giác Radar 6 trục SVG nở từ tâm và 6 thanh tiến độ chạy mượt từ `0% -> giá trị thực`, cùng hiệu ứng `.pitch-node-glide` giúp 11 cầu thủ trên sa bàn 2D lướt mượt sang vị trí chiến thuật mới khi chọn Cúp C1 (#1–#15) hoặc đổi đội hình.
+  - **Agent 3 (Reviewer) & Agent 4 (Tester)**: Bổ sung `:focus-visible` viền vàng kim và `@media (prefers-reduced-motion: reduce)` bảo đảm hiệu năng GPU 60fps, kiểm tra `npm run build` (`tsc --noEmit && vite build`) đạt `0 errors`.

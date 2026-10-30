@@ -1,0 +1,540 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   1. EMBER MINIMALIST DARK UI (LINEAR / VERCEL DESIGN SYSTEM)
+   ========================================================================== */
+:root {
+  color-scheme: dark;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --bg-primary: #0a0a0a;
+  --bg-sidebar: #0d0d0d;
+  --bg-card: #121212;
+  --bg-interactive: rgba(255, 255, 255, 0.07);
+  --border-hairline: rgba(255, 255, 255, 0.07);
+  --border-hover: rgba(255, 255, 255, 0.14);
+  --text-primary: #ededed;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --ember-accent: #f97316;
+
+  /* Motion Tokens */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring-subtle: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-micro: 160ms;
+  --dur-component: 280ms;
+  --dur-section: 400ms;
+}
+
+html,
+body {
+  background-color: #0a0a0a;
+  color: #ededed;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+html.light-mode,
+html.light-mode body {
+  color-scheme: light;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Default UI Typography: Inter */
+body,
+button,
+input,
+select,
+textarea,
+.font-sans,
+.font-serif,
+.font-royal {
+  font-family: var(--font-sans);
+}
+
+/* Quantitative Statistics, Scores, Percentages & Metrics: JetBrains Mono */
+.font-mono,
+code,
+pre,
+kbd,
+.stat-mono,
+td:not(:first-child),
+.tabular-nums {
+  font-family: var(--font-mono) !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Automatically style large KPI & stat numbers across modules in JetBrains Mono */
+.glass-royal .text-2xl,
+.glass-royal .text-3xl,
+.glass-royal .text-4xl,
+.glass-gold .text-2xl,
+.glass-gold .text-3xl,
+.bento-card .text-2xl,
+.bento-card .text-3xl,
+.bento-card .text-4xl {
+  font-family: var(--font-mono) !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+/* ==========================================================================
+   2. EMBER DARK SURFACE & BENTO CARD SYSTEM (#0A0A0A / #0D0D0D / #121212)
+   ========================================================================== */
+.bento-card,
+.glass-royal,
+.glass-gold {
+  background-color: #121212 !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 0.75rem !important; /* rounded-xl */
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.bento-card:hover,
+.glass-royal.royal-card-hover:hover {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* Normalize legacy navy backgrounds inside sub-sections to Ember Minimalist Dark */
+.bg-\[\#060913\],
+.bg-\[\#060A17\],
+.bg-\[\#04060D\],
+.bg-\[\#040812\],
+.bg-\[\#050914\] {
+  background-color: #0a0a0a !important;
+}
+
+.bg-\[\#0D1326\],
+.bg-\[\#0D1326\]\/90,
+.bg-\[\#0D1326\]\/80,
+.bg-\[\#080E20\],
+.bg-\[\#090E1E\],
+.bg-\[\#090F22\],
+.bg-\[\#0B1120\] {
+  background-color: #121212 !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+.bg-\[\#060913\]\/90,
+.bg-\[\#060913\]\/85,
+.bg-\[\#060913\]\/80,
+.bg-\[\#060913\]\/70,
+.bg-\[\#060913\]\/60 {
+  background-color: #0e0e0e !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+.bg-\[\#16203D\],
+.bg-\[\#16203D\]\/90,
+.bg-\[\#16203D\]\/70,
+.bg-\[\#16203D\]\/60 {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
+}
+
+/* Hairline 1px borders across all modules */
+.border-white\/10,
+.border-white\/15,
+.border-white\/5,
+.border-\[\#D4AF37\]\/35,
+.border-\[\#D4AF37\]\/40,
+.border-\[\#D4AF37\]\/30,
+.border-\[\#D4AF37\]\/25,
+.border-\[\#D4AF37\]\/50,
+.border-\[\#D4AF37\]\/55,
+.border-\[\#D4AF37\]\/60 {
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Remove loud gradients and convert CTA buttons to sleek Linear/Vercel Minimalist style */
+.bg-gradient-to-r.from-\[\#D4AF37\].to-\[\#F5D061\],
+.bg-gradient-to-br.from-\[\#F5D061\].to-\[\#D4AF37\],
+.bg-\[\#D4AF37\] {
+  background-image: none !important;
+  background-color: #ededed !important;
+  color: #0a0a0a !important;
+  box-shadow: none !important;
+}
+
+.bg-gradient-to-r.from-\[\#D4AF37\].to-\[\#F5D061\]:hover,
+.bg-\[\#D4AF37\]:hover {
+  background-color: #ffffff !important;
+}
+
+/* Refined Ember & Monochrome Accent Text */
+.text-\[\#F5D061\],
+.text-\[\#D4AF37\] {
+  color: #f4f4f5 !important;
+}
+
+/* Tactical Pitch & Modal Surfaces */
+.pitch-node-badge {
+  background-color: #121212 !important;
+  color: #f4f4f5 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.75) !important;
+}
+
+.pitch-top-banner {
+  background-color: #121212 !important;
+  color: #ededed !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+.pitch-top-banner span {
+  color: #ededed !important;
+}
+
+/* Dedicated 2-Column Profile Modal (Ember Minimalist #121212) */
+.profile-modal-surface {
+  background-color: #121212 !important;
+  color: #ededed !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.85) !important;
+}
+
+.profile-modal-box {
+  background-color: #0d0d0d !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 0.75rem !important;
+}
+
+.profile-modal-title {
+  color: #fafafa !important;
+}
+
+.profile-modal-body {
+  color: #d4d4d8 !important;
+}
+
+.profile-modal-muted {
+  color: #71717a !important;
+}
+
+.profile-modal-gold {
+  color: #f97316 !important;
+}
+
+/* ==========================================================================
+   3. GLOWING STATUS DOTS & MICRO-ANIMATIONS
+   ========================================================================== */
+.glow-dot-ember {
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.75);
+}
+
+.glow-dot-emerald {
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.75);
+}
+
+.glow-dot-sky {
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.75);
+}
+
+.glow-dot-violet {
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.75);
+}
+
+.glow-dot-amber {
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.75);
+}
+
+@keyframes pitchPassGlow {
+  0% {
+    stroke-dashoffset: 40;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-pitch-flow {
+  stroke-dasharray: 4 3;
+  animation: pitchPassGlow 1.6s linear infinite;
+}
+
+@keyframes sparklineDraw {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-sparkline-draw {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: sparklineDraw 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bentoEntranceUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-bento-entrance {
+  opacity: 0;
+  animation: bentoEntranceUp 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scoreFlipIn {
+  0% {
+    opacity: 0;
+    transform: perspective(300px) rotateX(-65deg) translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(300px) rotateX(0deg) translateY(0);
+  }
+}
+
+.animate-score-flip {
+  display: inline-block;
+  transform-origin: center bottom;
+  animation: scoreFlipIn 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes modalBackdropFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modalPanelEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-backdrop {
+  animation: modalBackdropFadeIn 180ms var(--ease-out-expo) both;
+}
+
+.animate-modal-panel {
+  animation: modalPanelEnter 260ms var(--ease-out-expo) both;
+}
+
+.royal-card-hover {
+  transition: transform 200ms var(--ease-out-expo),
+    border-color 200ms var(--ease-out-expo),
+    background-color 200ms var(--ease-in-out-quart);
+}
+
+.royal-card-hover:hover {
+  transform: translateY(-2px);
+}
+
+.royal-portrait-zoom {
+  transition: transform 320ms var(--ease-out-expo);
+}
+
+.group:hover .royal-portrait-zoom {
+  transform: scale(1.025);
+}
+
+.pitch-node-glide {
+  transition: left 420ms var(--ease-out-expo),
+    top 420ms var(--ease-out-expo),
+    transform 180ms var(--ease-spring-subtle);
+}
+
+.progress-bar-fill {
+  transition: width 380ms var(--ease-out-expo);
+}
+
+.heavy-section-deferred {
+  position: relative;
+}
+
+/* Focus Ring */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.35);
+  outline-offset: 2px;
+}
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+/* ==========================================================================
+   4. HIGH-CONTRAST LIGHT MODE SYSTEM (#F8FAFC / #FFFFFF / SLATE-900)
+   ========================================================================== */
+html.light-mode .bg-\[\#0A0A0A\],
+html.light-mode .bg-\[\#060913\],
+html.light-mode .bg-\[\#060A17\],
+html.light-mode .bg-\[\#04060D\],
+html.light-mode .bg-\[\#040812\],
+html.light-mode .bg-\[\#050914\] {
+  background-color: #f8fafc !important;
+}
+
+html.light-mode .bg-\[\#0D0D0D\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light-mode .bg-\[\#121212\],
+html.light-mode .bg-\[\#141414\],
+html.light-mode .bento-card,
+html.light-mode .glass-royal,
+html.light-mode .glass-gold,
+html.light-mode .bg-\[\#0D1326\],
+html.light-mode .bg-\[\#0D1326\]\/90,
+html.light-mode .bg-\[\#0D1326\]\/80,
+html.light-mode .bg-\[\#080E20\],
+html.light-mode .bg-\[\#090E1E\],
+html.light-mode .bg-\[\#090F22\],
+html.light-mode .bg-\[\#0B1120\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light-mode .bg-\[\#060913\]\/90,
+html.light-mode .bg-\[\#060913\]\/85,
+html.light-mode .bg-\[\#060913\]\/80,
+html.light-mode .bg-\[\#060913\]\/70,
+html.light-mode .bg-\[\#060913\]\/60,
+html.light-mode .bg-\[\#16203D\],
+html.light-mode .bg-\[\#16203D\]\/90,
+html.light-mode .bg-\[\#16203D\]\/70,
+html.light-mode .bg-\[\#16203D\]\/60 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light-mode .border-white\/\[0\.07\],
+html.light-mode .border-white\/\[0\.08\],
+html.light-mode .border-white\/\[0\.12\],
+html.light-mode .border-white\/10,
+html.light-mode .border-white\/15,
+html.light-mode .border-white\/5,
+html.light-mode .border-\[\#D4AF37\]\/35,
+html.light-mode .border-\[\#D4AF37\]\/40,
+html.light-mode .border-\[\#D4AF37\]\/30,
+html.light-mode .border-\[\#D4AF37\]\/25,
+html.light-mode .border-\[\#D4AF37\]\/50,
+html.light-mode .border-\[\#D4AF37\]\/55,
+html.light-mode .border-\[\#D4AF37\]\/60 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light-mode .divide-white\/\[0\.07\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+html.light-mode .text-white,
+html.light-mode .text-\[\#EDEDED\],
+html.light-mode .text-zinc-100,
+html.light-mode .text-slate-100,
+html.light-mode .text-\[\#F5D061\],
+html.light-mode .text-\[\#D4AF37\] {
+  color: #0f172a !important;
+}
+
+html.light-mode .text-zinc-200,
+html.light-mode .text-zinc-300,
+html.light-mode .text-slate-200,
+html.light-mode .text-slate-300,
+html.light-mode .text-neutral-300 {
+  color: #334155 !important;
+}
+
+html.light-mode .text-zinc-400,
+html.light-mode .text-zinc-500,
+html.light-mode .text-slate-400,
+html.light-mode .text-slate-500 {
+  color: #475569 !important;
+}
+
+html.light-mode .bg-white\/\[0\.07\],
+html.light-mode .bg-white\/\[0\.08\],
+html.light-mode .bg-white\/\[0\.06\],
+html.light-mode .bg-white\/\[0\.05\],
+html.light-mode .bg-white\/\[0\.04\] {
+  background-color: #f1f5f9 !important;
+}
+
+html.light-mode .profile-modal-surface {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.22) !important;
+}
+
+html.light-mode .profile-modal-box {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+html.light-mode .profile-modal-title {
+  color: #0f172a !important;
+}
+
+html.light-mode .profile-modal-body {
+  color: #334155 !important;
+}
+
+html.light-mode .profile-modal-muted {
+  color: #64748b !important;
+}
+
+html.light-mode ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.light-mode ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+html.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
