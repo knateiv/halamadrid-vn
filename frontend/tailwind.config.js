@@ -15,14 +15,15 @@ export default {
           interactive: '#162344',
           gold: '#D4AF37',
           goldLight: '#F5D061',
+          goldDark: '#B48811',
           blue: '#1D4ED8',
           white: '#F8FAFC',
         },
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['"Cinzel"', 'Georgia', 'serif'],
-        royal: ['"Cinzel"', '"Plus Jakarta Sans"', 'serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        royal: ['"Playfair Display"', '"Plus Jakarta Sans"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       transitionTimingFunction: {

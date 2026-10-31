@@ -8,7 +8,7 @@
 :root {
   color-scheme: dark;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Cinzel', Georgia, serif;
+  --font-display: 'Playfair Display', 'Plus Jakarta Sans', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Royal Bernabéu Palette */
@@ -56,12 +56,12 @@ html.light-mode body {
   color-scheme: light;
   background-color: #f8fafc !important;
   background-image:
-    radial-gradient(ellipse 80% 45% at 50% -10%, rgba(29, 78, 216, 0.08), transparent 70%),
-    radial-gradient(ellipse 55% 32% at 50% 0%, rgba(212, 175, 55, 0.1), transparent 65%) !important;
+    radial-gradient(ellipse 80% 45% at 50% -10%, rgba(29, 78, 216, 0.06), transparent 70%),
+    radial-gradient(ellipse 55% 32% at 50% 0%, rgba(180, 136, 17, 0.08), transparent 65%) !important;
   color: #0f172a !important;
 }
 
-/* Editorial & UI Typography */
+/* Editorial & UI Typography (100% Vietnamese Glyph Coverage) */
 body,
 button,
 input,
@@ -75,7 +75,8 @@ textarea,
 .font-serif,
 .editorial-display {
   font-family: var(--font-display);
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
+  font-variant-ligatures: common-ligatures;
 }
 
 /* Quantitative Statistics, xG, G+A/90, Chi-Square & Scores: JetBrains Mono */
@@ -144,21 +145,6 @@ td:not(:first-child),
   box-shadow:
     0 24px 50px -16px rgba(29, 78, 216, 0.38),
     0 0 28px -6px rgba(212, 175, 55, 0.32);
-}
-
-/* Harmonize legacy neutral dark classes inside sub-components to Royal Bernabéu Sapphire */
-.bg-\[\#0A0A0A\],
-.bg-\[\#060913\],
-.bg-\[\#060A17\],
-.bg-\[\#04060D\],
-.bg-\[\#040812\] {
-  background-color: #050914;
-}
-
-.bg-\[\#121212\],
-.bg-\[\#0D0D0D\],
-.bg-\[\#141414\] {
-  background-color: rgba(11, 18, 36, 0.9);
 }
 
 /* Tactical Pitch & Modal Surfaces */
@@ -382,39 +368,65 @@ select:focus-visible {
 }
 
 /* ==========================================================================
-   4. BERNABÉU DAYLIGHT / WHITE KIT MODE (LIGHT MODE SUPPORT)
+   4. "WHITE BERNABÉU KIT" LIGHT MODE SYSTEM (#F8FAFC / #FFFFFF / #B48811 / #0F172A)
    ========================================================================== */
-html.light-mode .bg-\[\#050914\],
-html.light-mode .bg-\[\#0A0A0A\],
-html.light-mode .bg-\[\#060913\],
-html.light-mode .bg-\[\#060A17\],
-html.light-mode .bg-\[\#04060D\],
-html.light-mode .bg-\[\#040812\] {
-  background-color: #f8fafc !important;
-}
 
-html.light-mode .bg-\[\#0B1224\],
-html.light-mode .bg-\[\#0B1224\]\/90,
-html.light-mode .bg-\[\#0B1224\]\/95,
-html.light-mode .bg-\[\#0D0D0D\],
-html.light-mode .bg-\[\#121212\],
-html.light-mode .bg-\[\#141414\],
-html.light-mode .bento-card,
-html.light-mode .glass-royal,
-html.light-mode .glass-gold,
-html.light-mode .royal-collector-card,
-html.light-mode .bg-\[\#0D1326\],
-html.light-mode .bg-\[\#0D1326\]\/90,
-html.light-mode .bg-\[\#0D1326\]\/80,
-html.light-mode .bg-\[\#080E20\],
-html.light-mode .bg-\[\#090E1E\],
-html.light-mode .bg-\[\#090F22\],
-html.light-mode .bg-\[\#0B1120\] {
+/* 4.1. Convert non-dark-locked cards & containers to Pearl White (#FFFFFF) & Soft Royal Ivory (#F8FAFC) */
+html.light-mode .bento-card:not(.keep-dark-surface),
+html.light-mode .glass-royal:not(.keep-dark-surface),
+html.light-mode .glass-gold:not(.keep-dark-surface),
+html.light-mode .royal-collector-card:not(.keep-dark-surface) {
   background: #ffffff !important;
-  border-color: rgba(180, 138, 30, 0.32) !important;
-  box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(180, 136, 17, 0.3) !important;
+  box-shadow:
+    0 10px 30px -10px rgba(15, 23, 42, 0.08),
+    0 2px 6px -1px rgba(180, 136, 17, 0.06) !important;
 }
 
+html.light-mode .royal-collector-card:not(.keep-dark-surface):hover,
+html.light-mode .glass-royal.royal-card-hover:not(.keep-dark-surface):hover {
+  border-color: rgba(180, 136, 17, 0.65) !important;
+  box-shadow:
+    0 18px 38px -12px rgba(15, 23, 42, 0.14),
+    0 0 20px -6px rgba(180, 136, 17, 0.2) !important;
+}
+
+/* Convert nested dark boxes outside .keep-dark-surface (at any nesting depth) to crisp light surfaces */
+html.light-mode .bg-\[\#050914\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#050914\]\/90:not(.keep-dark-surface),
+html.light-mode .bg-\[\#050914\]\/85:not(.keep-dark-surface),
+html.light-mode .bg-\[\#050914\]\/80:not(.keep-dark-surface),
+html.light-mode .bg-\[\#050914\]\/75:not(.keep-dark-surface),
+html.light-mode .bg-\[\#050914\]\/70:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0B1224\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0B1224\]\/95:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0B1224\]\/90:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0D1326\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0D1326\]\/90:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0D1326\]\/80:not(.keep-dark-surface),
+html.light-mode .bg-\[\#060913\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#060913\]\/90:not(.keep-dark-surface),
+html.light-mode .bg-\[\#060913\]\/85:not(.keep-dark-surface),
+html.light-mode .bg-\[\#060913\]\/80:not(.keep-dark-surface),
+html.light-mode .bg-\[\#060913\]\/70:not(.keep-dark-surface),
+html.light-mode .bg-\[\#060913\]\/60:not(.keep-dark-surface),
+html.light-mode .bg-\[\#080E20\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#090E1E\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#090F22\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0B1120\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#121212\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#0D0D0D\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#141414\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#16203D\]:not(.keep-dark-surface),
+html.light-mode .bg-\[\#16203D\]\/90:not(.keep-dark-surface),
+html.light-mode .bg-\[\#16203D\]\/70:not(.keep-dark-surface),
+html.light-mode .bg-\[\#16203D\]\/60:not(.keep-dark-surface) {
+  background-color: #f8fafc !important;
+  border-color: rgba(180, 136, 17, 0.28) !important;
+  color: #0f172a !important;
+}
+
+/* 4.2. Typography Contrast in Light Mode (ONLY outside .keep-dark-surface) */
 html.light-mode .text-white,
 html.light-mode .text-\[\#F8FAFC\],
 html.light-mode .text-\[\#EDEDED\],
@@ -425,7 +437,7 @@ html.light-mode .text-slate-100 {
 
 html.light-mode .text-\[\#D4AF37\],
 html.light-mode .text-\[\#F5D061\] {
-  color: #9a7211 !important;
+  color: #b48811 !important;
 }
 
 html.light-mode .text-zinc-200,
@@ -433,7 +445,7 @@ html.light-mode .text-zinc-300,
 html.light-mode .text-slate-200,
 html.light-mode .text-slate-300,
 html.light-mode .text-neutral-300 {
-  color: #334155 !important;
+  color: #1e293b !important;
 }
 
 html.light-mode .text-zinc-400,
@@ -443,10 +455,62 @@ html.light-mode .text-slate-500 {
   color: #475569 !important;
 }
 
+/* 4.3. STRICT PRESERVATION OF DARK SURFACES (.keep-dark-surface):
+   Hero 3D Banner, Opta Pitch Turf & Player Portrait Headers ALWAYS keep bright white/gold text! */
+html.light-mode .keep-dark-surface {
+  color: #f8fafc !important;
+}
+
+html.light-mode .keep-dark-surface .text-white,
+html.light-mode .keep-dark-surface .text-\[\#F8FAFC\],
+html.light-mode .keep-dark-surface .text-\[\#EDEDED\],
+html.light-mode .keep-dark-surface .text-slate-100,
+html.light-mode .keep-dark-surface h1,
+html.light-mode .keep-dark-surface h2,
+html.light-mode .keep-dark-surface h3,
+html.light-mode .keep-dark-surface h4 {
+  color: #f8fafc !important;
+}
+
+html.light-mode .keep-dark-surface .text-\[\#F5D061\],
+html.light-mode .keep-dark-surface .text-\[\#D4AF37\] {
+  color: #f5d061 !important;
+}
+
+html.light-mode .keep-dark-surface .text-slate-200,
+html.light-mode .keep-dark-surface .text-slate-300,
+html.light-mode .keep-dark-surface .text-zinc-200,
+html.light-mode .keep-dark-surface .text-zinc-300 {
+  color: #e2e8f0 !important;
+}
+
+html.light-mode .keep-dark-surface .text-slate-400,
+html.light-mode .keep-dark-surface .text-zinc-400 {
+  color: #cbd5e1 !important;
+}
+
+html.light-mode .keep-dark-surface .bg-\[\#050914\],
+html.light-mode .keep-dark-surface .bg-\[\#050914\]\/85,
+html.light-mode .keep-dark-surface .bg-\[\#050914\]\/90,
+html.light-mode .keep-dark-surface .bg-\[\#060913\],
+html.light-mode .keep-dark-surface .bg-\[\#060913\]\/85,
+html.light-mode .keep-dark-surface .bg-\[\#060913\]\/90 {
+  background-color: rgba(5, 9, 20, 0.88) !important;
+  color: #f8fafc !important;
+  border-color: rgba(212, 175, 55, 0.4) !important;
+}
+
+html.light-mode .keep-dark-surface .text-\[\#050914\],
+html.light-mode .keep-dark-surface .text-\[\#060913\] {
+  color: #050914 !important;
+}
+
+/* Profile Modal in Light Mode */
 html.light-mode .profile-modal-surface {
   background: #ffffff !important;
   color: #0f172a !important;
-  border: 1px solid rgba(180, 138, 30, 0.4) !important;
+  border: 1px solid rgba(180, 136, 17, 0.4) !important;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.22) !important;
 }
 
 html.light-mode .profile-modal-box {
@@ -464,4 +528,12 @@ html.light-mode .profile-modal-body {
 
 html.light-mode .profile-modal-muted {
   color: #64748b !important;
+}
+
+html.light-mode ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.light-mode ::-webkit-scrollbar-thumb {
+  background: rgba(180, 136, 17, 0.4);
 }

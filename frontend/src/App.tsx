@@ -505,40 +505,60 @@ export const App: React.FC = () => {
          ========================================================================== */}
       <header className="fixed top-3 inset-x-0 z-50 px-3 sm:px-6 lg:px-8 pointer-events-none">
         <div
-          className={`pointer-events-auto max-w-7xl mx-auto rounded-2xl border backdrop-blur-xl px-3.5 sm:px-5 h-16 flex items-center justify-between gap-3 shadow-[0_20px_50px_rgba(2,6,23,0.85)] transition-all ${
+          className={`pointer-events-auto max-w-7xl mx-auto px-4 py-2 rounded-2xl border backdrop-blur-xl min-h-[60px] flex flex-wrap items-center justify-between gap-2 transition-all ${
             isDark
-              ? 'bg-[#0B1224]/90 border-[#D4AF37]/30'
-              : 'bg-white/95 border-[#D4AF37]/40 shadow-lg'
+              ? 'bg-[#0B1224]/90 border-[#D4AF37]/30 shadow-[0_20px_50px_rgba(2,6,23,0.85)]'
+              : 'bg-[#FFFFFF]/95 border-[#D4AF37]/35 shadow-[0_12px_32px_rgba(15,23,42,0.10)]'
           }`}
         >
           {/* Left: Royal Madrid Crown Emblem & Editorial Brand */}
           <a
             href="#overview"
             onClick={(e) => handleNavClick(e, '#overview')}
-            className="flex items-center gap-3 min-w-0 group"
+            className="flex items-center gap-2.5 shrink-0 group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F5D061] via-[#D4AF37] to-[#9A7211] p-[1px] shadow-[0_0_20px_rgba(212,175,55,0.35)] shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#F5D061] via-[#D4AF37] to-[#9A7211] p-[1px] shadow-[0_0_16px_rgba(212,175,55,0.35)] shrink-0">
               <div className="w-full h-full rounded-[11px] bg-[#050914] flex items-center justify-center">
-                <Crown className="w-5 h-5 text-[#F5D061] group-hover:scale-110 transition-transform" />
+                <Crown className="w-4 h-4 text-[#F5D061] group-hover:scale-110 transition-transform" />
               </div>
             </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-royal text-sm sm:text-base font-extrabold tracking-wider text-[#F8FAFC] truncate">
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span
+                  className={`font-royal text-sm sm:text-[15px] font-black tracking-wider ${
+                    isDark ? 'text-[#F8FAFC]' : 'text-[#0F172A]'
+                  }`}
+                >
                   HALAMADRID
                 </span>
-                <span className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-[#D4AF37]/15 border border-[#D4AF37]/40 font-mono text-[10px] font-bold text-[#F5D061]">
-                  OPTA × BERNABÉU
+                <span
+                  className={`hidden 2xl:inline-block px-1.5 py-0.5 rounded border font-mono text-[9.5px] font-bold ${
+                    isDark
+                      ? 'bg-[#D4AF37]/15 border-[#D4AF37]/40 text-[#F5D061]'
+                      : 'bg-[#D4AF37]/15 border-[#D4AF37]/40 text-[#B48811]'
+                  }`}
+                >
+                  OPTA
                 </span>
               </div>
-              <div className="font-mono text-[10px] text-slate-400 truncate">
-                {lang === 'vi' ? 'TẠP CHÍ DỮ LIỆU • 1902–2026/27' : 'EDITORIAL DATA LAB • 1902–2026/27'}
+              <div
+                className={`font-mono text-[9.5px] ${
+                  isDark ? 'text-slate-400' : 'text-slate-500'
+                }`}
+              >
+                1902–2026/27
               </div>
             </div>
           </a>
 
-          {/* Center: Megamenu Broadcast Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-1 bg-[#050914]/75 p-1.5 rounded-xl border border-[#D4AF37]/20">
+          {/* Center: Compact Megamenu Broadcast Navigation Links (No Right Overflow) */}
+          <nav
+            className={`hidden lg:flex items-center flex-wrap gap-1 p-1 rounded-xl border ${
+              isDark
+                ? 'bg-[#050914]/80 border-[#D4AF37]/20'
+                : 'bg-[#F8FAFC] border-[#D4AF37]/30'
+            }`}
+          >
             {megamenuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeNav === item.href;
@@ -547,46 +567,47 @@ export const App: React.FC = () => {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                  className={`px-2.5 py-1.5 rounded-lg text-[11.5px] font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#F5D061] text-[#050914] font-bold shadow-[0_0_16px_rgba(212,175,55,0.35)]'
-                      : 'text-slate-300 hover:text-white hover:bg-white/[0.06]'
+                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#F5D061] text-[#050914] font-bold shadow-[0_0_14px_rgba(212,175,55,0.35)]'
+                      : isDark
+                        ? 'text-slate-300 hover:text-white hover:bg-white/[0.06]'
+                        : 'text-[#0F172A] hover:bg-[#D4AF37]/15'
                   }`}
                 >
                   <Icon
                     className={`w-3.5 h-3.5 shrink-0 ${
-                      isActive ? 'text-[#050914]' : 'text-[#D4AF37]'
+                      isActive ? 'text-[#050914]' : isDark ? 'text-[#D4AF37]' : 'text-[#B48811]'
                     }`}
                   />
                   <span>{lang === 'vi' ? item.labelVi : item.labelEn}</span>
-                  {item.badge && (
-                    <span
-                      className={`font-mono text-[10px] px-1.5 py-0.2 rounded ${
-                        isActive
-                          ? 'bg-[#050914]/20 text-[#050914] font-extrabold'
-                          : 'bg-[#0B1224] border border-[#D4AF37]/25 text-[#F5D061]'
-                      }`}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
                 </a>
               );
             })}
           </nav>
 
           {/* Right: Quick Search, Theme & Language Controls */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               onClick={() => setCmdOpen(true)}
-              className="h-9 px-3 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/30 text-xs text-slate-300 hover:text-white transition-all flex items-center gap-2"
+              className={`h-8 px-2.5 rounded-xl border text-xs font-medium transition-all flex items-center gap-1.5 ${
+                isDark
+                  ? 'bg-[#050914]/85 hover:bg-[#101A33] border-[#D4AF37]/30 text-slate-200 hover:text-white'
+                  : 'bg-[#F8FAFC] hover:bg-[#F1F5F9] border-[#D4AF37]/35 text-[#0F172A]'
+              }`}
               title="Quick Search (Ctrl+K)"
             >
-              <Search className="w-3.5 h-3.5 text-[#F5D061]" />
-              <span className="hidden md:inline">
+              <Search className={`w-3.5 h-3.5 ${isDark ? 'text-[#F5D061]' : 'text-[#B48811]'}`} />
+              <span className="hidden sm:inline whitespace-nowrap">
                 {lang === 'vi' ? '74 Hồ sơ' : '74 Profiles'}
               </span>
-              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#0B1224] border border-[#D4AF37]/25 text-[#F5D061]">
+              <span
+                className={`font-mono text-[10px] px-1 py-0.2 rounded border ${
+                  isDark
+                    ? 'bg-[#0B1224] border-[#D4AF37]/25 text-[#F5D061]'
+                    : 'bg-white border-[#D4AF37]/35 text-[#B48811]'
+                }`}
+              >
                 ⌘K
               </span>
             </button>
@@ -596,25 +617,33 @@ export const App: React.FC = () => {
               title={
                 isDark
                   ? lang === 'vi'
-                    ? 'Chuyển sang Giao diện Sáng'
-                    : 'Switch to Light Mode'
+                    ? 'Chuyển sang Giao diện Sáng (White Bernabéu)'
+                    : 'Switch to Light Mode (White Bernabéu)'
                   : lang === 'vi'
-                    ? 'Chuyển sang Giao diện Tối'
-                    : 'Switch to Dark Mode'
+                    ? 'Chuyển sang Giao diện Tối (Midnight Navy)'
+                    : 'Switch to Dark Mode (Midnight Navy)'
               }
               aria-label="Toggle Theme"
-              className="w-9 h-9 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/30 flex items-center justify-center text-[#F5D061] transition-colors"
+              className={`w-8 h-8 rounded-xl border flex items-center justify-center transition-colors ${
+                isDark
+                  ? 'bg-[#050914]/85 hover:bg-[#101A33] border-[#D4AF37]/30 text-[#F5D061]'
+                  : 'bg-[#F8FAFC] hover:bg-[#F1F5F9] border-[#D4AF37]/35 text-[#B48811]'
+              }`}
             >
               {isDark ? (
-                <Moon className="w-4 h-4" strokeWidth={1.75} />
+                <Moon className="w-3.5 h-3.5" strokeWidth={1.75} />
               ) : (
-                <Sun className="w-4 h-4" strokeWidth={1.75} />
+                <Sun className="w-3.5 h-3.5" strokeWidth={1.75} />
               )}
             </button>
 
             <button
               onClick={() => setLang((prev) => (prev === 'vi' ? 'en' : 'vi'))}
-              className="h-9 px-2.5 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/30 font-mono text-xs font-bold text-[#F5D061] transition-colors"
+              className={`h-8 px-2 rounded-xl border font-mono text-[11px] font-bold transition-colors ${
+                isDark
+                  ? 'bg-[#050914]/85 hover:bg-[#101A33] border-[#D4AF37]/30 text-[#F5D061]'
+                  : 'bg-[#F8FAFC] hover:bg-[#F1F5F9] border-[#D4AF37]/35 text-[#0F172A]'
+              }`}
             >
               {lang === 'vi' ? 'VN' : 'EN'}
             </button>
@@ -622,7 +651,11 @@ export const App: React.FC = () => {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="xl:hidden w-9 h-9 rounded-xl bg-[#050914]/85 border border-[#D4AF37]/30 flex items-center justify-center text-[#F5D061]"
+              className={`lg:hidden w-8 h-8 rounded-xl border flex items-center justify-center ${
+                isDark
+                  ? 'bg-[#050914]/85 border-[#D4AF37]/30 text-[#F5D061]'
+                  : 'bg-[#F8FAFC] border-[#D4AF37]/35 text-[#0F172A]'
+              }`}
               aria-label="Toggle Megamenu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -632,7 +665,13 @@ export const App: React.FC = () => {
 
         {/* Mobile / Tablet Dropdown Megamenu */}
         {mobileMenuOpen && (
-          <div className="pointer-events-auto xl:hidden max-w-7xl mx-auto mt-2 rounded-2xl bg-[#0B1224]/95 border border-[#D4AF37]/35 backdrop-blur-xl p-3 shadow-2xl grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+          <div
+            className={`pointer-events-auto lg:hidden max-w-7xl mx-auto mt-2 rounded-2xl border backdrop-blur-xl p-3 shadow-2xl grid grid-cols-1 sm:grid-cols-2 gap-1.5 ${
+              isDark
+                ? 'bg-[#0B1224]/95 border-[#D4AF37]/35'
+                : 'bg-white/95 border-[#D4AF37]/40'
+            }`}
+          >
             {megamenuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeNav === item.href;
@@ -644,18 +683,15 @@ export const App: React.FC = () => {
                   className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between ${
                     isActive
                       ? 'bg-[#D4AF37] text-[#050914] font-bold'
-                      : 'text-slate-200 hover:bg-white/[0.06]'
+                      : isDark
+                        ? 'text-slate-200 hover:bg-white/[0.06]'
+                        : 'text-[#0F172A] hover:bg-slate-100'
                   }`}
                 >
                   <span className="flex items-center gap-2">
                     <Icon className="w-4 h-4" />
                     <span>{lang === 'vi' ? item.labelVi : item.labelEn}</span>
                   </span>
-                  {item.badge && (
-                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#050914]/25">
-                      {item.badge}
-                    </span>
-                  )}
                 </a>
               );
             })}
@@ -670,8 +706,8 @@ export const App: React.FC = () => {
         id="overview"
         className="relative pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto space-y-6"
       >
-        {/* 3D WebGL Santiago Bernabéu Hero Showcase Card */}
-        <div className="gsap-hero-reveal relative rounded-3xl overflow-hidden border border-[#D4AF37]/35 bg-gradient-to-b from-[#0B1224]/95 via-[#070D1D]/95 to-[#050914]/95 p-6 sm:p-8 lg:p-10 shadow-[0_30px_80px_-20px_rgba(2,6,23,0.95)]">
+        {/* 3D WebGL Santiago Bernabéu Hero Showcase Card (Locked Dark Stadium Atmosphere in Both Modes) */}
+        <div className="keep-dark-surface gsap-hero-reveal relative rounded-3xl overflow-hidden border border-[#D4AF37]/35 bg-gradient-to-b from-[#0B1224]/95 via-[#070D1D]/95 to-[#050914]/95 p-6 sm:p-8 lg:p-10 shadow-[0_30px_80px_-20px_rgba(2,6,23,0.95)]">
           {/* Interactive Three.js 3D Stadium & 15-Star Crown Orbital Canvas */}
           <BernabeuHero3DCanvas />
 

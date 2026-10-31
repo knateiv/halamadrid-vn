@@ -214,7 +214,7 @@ export const OptaTacticalPitchLab: React.FC<OptaTacticalPitchLabProps> = ({
 
           {/* Interactive Opta Pitch Container */}
           <div
-            className="relative w-full aspect-[105/68] rounded-2xl overflow-hidden border border-[#D4AF37]/35 shadow-[0_25px_60px_-15px_rgba(2,6,23,0.95)] select-none transition-transform duration-500"
+            className="keep-dark-surface relative w-full aspect-[105/68] rounded-2xl overflow-hidden border border-[#D4AF37]/35 shadow-[0_25px_60px_-15px_rgba(2,6,23,0.95)] select-none transition-transform duration-500"
             style={{
               background:
                 'radial-gradient(ellipse at 50% 50%, #0b2922 0%, #061816 58%, #040d18 100%)',
@@ -532,7 +532,7 @@ export const OptaTacticalPitchLab: React.FC<OptaTacticalPitchLabProps> = ({
             </div>
 
             {/* 6-Axis SVG Radar */}
-            <div className="my-3 flex justify-center">
+            <div className="keep-dark-surface my-3 flex justify-center bg-[#050914] rounded-xl p-3 border border-[#D4AF37]/25">
               <svg viewBox={`0 0 ${radarSize} ${radarSize}`} className="w-full max-w-[250px] h-auto overflow-visible">
                 {/* Concentric Hexagons */}
                 {[0.25, 0.5, 0.75, 1].map((lvl) => {
