@@ -409,47 +409,40 @@ check(
   `uclTitles=${data.championsLeagueTitles.length}, tacticalBlueprints=${uclEditionsCount}`
 );
 
-// 4. KIỂM ĐỊNH LUỒNG BẤM (onClick) & GIAO DIỆN QUANTITATIVE INTELLIGENCE v2.7
+// 4. KIỂM ĐỊNH LUỒNG BẤM (onClick) & GIAO DIỆN ROYAL BERNABÉU EDITORIAL & OPTA TACTICAL UI
 const appTsx = fs.readFileSync(APP_TSX_PATH, 'utf8');
 const squadTsx = fs.readFileSync(SQUAD_TSX_PATH, 'utf8');
 check(
-  '4. ONCLICK & v2.7 UI',
-  '4 Thẻ Bento Sparkline KPI + Biểu đồ Đường cong Goals vs xG (2024–2026/27) + Cột Trụ Cột Đội Hình 2026/27',
+  '4. ROYAL BERNABÉU & OPTA UI',
+  '3D Bernabéu Hero + 4 Thẻ Royal Opta KPI + Sa Bàn Chiến Thuật Opta 2D/3D + Đường cong Goals vs xG',
   appTsx.includes('REAL MADRID QUANTITATIVE INTELLIGENCE • 1902–2026/27') &&
+    appTsx.includes('<BernabeuHero3DCanvas />') &&
+    appTsx.includes('<OptaTacticalPitchLab') &&
     appTsx.includes("scrollToSection('#museum', '#museum')") &&
     appTsx.includes("triggerSquadLabMode('bmv_trio', '#bmv-spotlight', '#squad')") &&
-    appTsx.includes("scrollToSection('#clasico')") &&
+    appTsx.includes("scrollToSection('#clasico', '#clasico')") &&
     appTsx.includes("scrollToSection('#simulator', '#simulator')") &&
     appTsx.includes('Trụ Cột Đội Hình 2026/27') &&
     squadTsx.includes('id="bmv-spotlight"'),
-  '4 Bento Sparkline Cards + Smooth Bezier Curve + 4 Core Spotlight Cards verified'
+  '3D Bernabéu Canvas + Opta Tactical Pitch Lab + 4 Royal KPI Cards + Smooth Bezier Curve verified'
 );
 
 check(
-  '4. ONCLICK & v2.7 UI',
-  'Sidebar Tiếng Việt, Nút Mặt Trăng Sáng/Tối (Theme Toggle) & Xóa ⌘K trên Sidebar',
-  appTsx.includes("shortName: 'F. Valverde (C)'") &&
+  '4. ROYAL BERNABÉU & OPTA UI',
+  'Top Floating Glassmorphic Megamenu (Xóa Sidebar dọc), GSAP ScrollTrigger & Royal Collector Cards',
+  appTsx.includes('TOP FLOATING GLASSMORPHIC MEGAMENU') &&
+    !appTsx.includes('<aside') &&
+    appTsx.includes("shortName: 'F. Valverde (C)'") &&
     appTsx.includes("pos: 'RW/AM'") &&
-    appTsx.includes('PHÂN HỆ CHỨC NĂNG') &&
-    appTsx.includes("labelVi: 'Tổng Quan'") &&
-    appTsx.includes("labelVi: 'Bảo Tàng C1'") &&
-    appTsx.includes("labelVi: 'Đội Hình 2026/27'") &&
-    appTsx.includes("labelVi: 'Thống Kê Cầu Thủ'") &&
-    appTsx.includes("labelVi: 'Chuyển Nhượng & El Clásico'") &&
-    appTsx.includes("labelVi: 'Báo Cáo Chiến Thuật'") &&
-    !appTsx.includes('100% Thắng CK (98–24)') &&
-    !appTsx.includes('10.000 Giả lập') &&
-    appTsx.includes('74 Hồ sơ') &&
-    appTsx.includes('DỮ LIỆU 1902–2026/27') &&
-    appTsx.includes('<Moon className="w-3.5 h-3.5" strokeWidth={1.75} />') &&
-    appTsx.includes('<Sun className="w-3.5 h-3.5" strokeWidth={1.75} />') &&
-    appTsx.includes('w-8 h-7 rounded-lg bg-[#141414] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.06] transition-colors') &&
-    appTsx.includes('bg-[#F8FAFC] text-slate-900') &&
-    !appTsx.includes('Tìm nhanh...') &&
-    (appTsx.match(/<kbd/g) || []).length === 1 &&
-    !appTsx.includes('v2.7') &&
-    !appTsx.includes('SYNC 27.10.2026'),
-  'Theme Toggle (Moon/Sun Dark/Light Mode), Sidebar search cleaned, Vietnamese UI verified'
+    appTsx.includes("labelVi: 'Phân Tích Chiến Thuật xG'") &&
+    appTsx.includes("labelVi: 'Kỷ Nguyên'") &&
+    appTsx.includes("labelVi: 'Phòng Truyền Thống 15 C1'") &&
+    appTsx.includes("labelVi: '74 Huyền Thoại & Cầu Thủ'") &&
+    appTsx.includes("labelVi: 'El Clásico'") &&
+    appTsx.includes('bg-[#050914] text-[#F8FAFC]') &&
+    squadTsx.includes('royal-collector-card') &&
+    squadTsx.includes('useGSAP'),
+  'Top Floating Glassmorphic Megamenu, Midnight Royal Navy #050914, GSAP & Royal Collector Cards verified'
 );
 
 console.log('\n================================================================================');

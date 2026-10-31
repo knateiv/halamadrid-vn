@@ -8,25 +8,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        ember: {
-          bg: '#0A0A0A',
-          sidebar: '#0D0D0D',
-          card: '#121212',
-          elevated: '#161616',
-        },
         royal: {
-          navy: '#0A0A0A',
-          elevated: '#121212',
-          interactive: '#181818',
-          gold: '#E5E5E5',
-          goldLight: '#FFFFFF',
-          purple: '#262626',
+          navy: '#050914',
+          sapphire: '#0B1224',
+          elevated: '#101A33',
+          interactive: '#162344',
+          gold: '#D4AF37',
+          goldLight: '#F5D061',
+          blue: '#1D4ED8',
+          white: '#F8FAFC',
         },
       },
       fontFamily: {
-        sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
-        royal: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['"Cinzel"', 'Georgia', 'serif'],
+        royal: ['"Cinzel"', '"Plus Jakarta Sans"', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       transitionTimingFunction: {

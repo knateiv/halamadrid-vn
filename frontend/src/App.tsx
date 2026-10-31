@@ -1,17 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import {
   ArrowUpRight,
   BarChart3,
+  Clock,
   Cpu,
-  FileSpreadsheet,
+  Crown,
+  Flame,
   GitCommit,
-  Layers,
   Menu,
   Moon,
-  PanelLeftClose,
-  PanelLeftOpen,
   Search,
   SlidersHorizontal,
+  Sparkles,
   Sun,
   Trophy,
   Users,
@@ -28,6 +31,10 @@ import { Madridista101Section } from './components/Madridista101Section';
 import { PlayerAvatar } from './components/PlayerAvatar';
 import { PlayerWalkoutModal } from './components/PlayerWalkoutModal';
 import { CountryFlag } from './components/CountryFlag';
+import { BernabeuHero3DCanvas } from './components/BernabeuHero3DCanvas';
+import { OptaTacticalPitchLab } from './components/OptaTacticalPitchLab';
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const dataset = rawAnalyticsData as unknown as MadridAnalyticsDataset;
 
@@ -111,9 +118,6 @@ const CURVE_DATASETS: Record<
   },
 };
 
-/**
- * Generates a smooth Cubic-Bezier SVG path (Catmull-Rom to Cubic Bezier conversion)
- */
 function buildSmoothBezierPath(coords: Array<{ x: number; y: number }>): string {
   if (coords.length === 0) return '';
   if (coords.length === 1) return `M ${coords[0].x} ${coords[0].y}`;
@@ -135,9 +139,6 @@ function buildSmoothBezierPath(coords: Array<{ x: number; y: number }>): string 
   return path;
 }
 
-/**
- * Smooth easeOutExpo requestAnimationFrame count-up hook (1200ms)
- */
 function useCountUp(target: number, durationMs = 1200, triggerKey = 0): number {
   const [value, setValue] = useState<number>(0);
 
@@ -172,13 +173,14 @@ export const App: React.FC = () => {
   const isDark = theme === 'dark';
   const [activeNav, setActiveNav] = useState<string>('#overview');
   const [overviewAnimKey, setOverviewAnimKey] = useState<number>(0);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [heroSelectedPlayer, setHeroSelectedPlayer] = useState<PlayerProfile | null>(null);
   const [curveTab, setCurveTab] = useState<CurveTab>('xg_trajectory');
   const [cmdOpen, setCmdOpen] = useState<boolean>(false);
   const [cmdQuery, setCmdQuery] = useState<string>('');
   const [squadLabCommand, setSquadLabCommand] = useState<SquadLabCommand | null>(null);
+
+  const appRootRef = useRef<HTMLDivElement | null>(null);
 
   const uclCount = useCountUp(15, 1200, overviewAnimKey);
   const bmvOutputCount = useCountUp(
@@ -194,11 +196,29 @@ export const App: React.FC = () => {
     overviewAnimKey
   );
 
+  // GSAP Hero & Editorial Showcase Entrance Orchestration
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        '.gsap-hero-reveal',
+        { autoAlpha: 0, y: 22 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.08,
+          ease: 'power3.out',
+        }
+      );
+    },
+    { scope: appRootRef, dependencies: [overviewAnimKey] }
+  );
+
   const scrollToSection = (selector: string, navHref?: string) => {
     if (navHref) {
       setActiveNav(navHref);
     }
-    setMobileSidebarOpen(false);
+    setMobileMenuOpen(false);
     const target = document.querySelector(selector);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -211,7 +231,7 @@ export const App: React.FC = () => {
     navHref: string
   ) => {
     setActiveNav(navHref);
-    setMobileSidebarOpen(false);
+    setMobileMenuOpen(false);
     setSquadLabCommand({ mode, seq: Date.now() });
     setTimeout(() => {
       const target = document.querySelector(scrollTarget);
@@ -221,7 +241,7 @@ export const App: React.FC = () => {
     }, 40);
   };
 
-  // Sync Dark Mode (#0A0A0A) / Light Mode (#F8FAFC) with documentElement
+  // Sync Midnight Royal Navy (#050914) / Daylight White (#F8FAFC) with documentElement
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
@@ -248,14 +268,15 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
-  // Scroll-Spy for the 6 Sidebar Menu Items
+  // Scroll-Spy for the Top Floating Glassmorphic Megamenu
   useEffect(() => {
     const trackedAnchors = [
       { id: 'overview', nav: '#overview' },
+      { id: 'timeline', nav: '#timeline' },
       { id: 'museum', nav: '#museum' },
       { id: 'squad', nav: '#squad' },
       { id: 'player-stats', nav: '#player-stats' },
-      { id: 'transfers', nav: '#transfers' },
+      { id: 'clasico', nav: '#clasico' },
       { id: 'simulator', nav: '#simulator' },
     ];
     const handleScroll = () => {
@@ -272,60 +293,60 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 6 Ember Minimalist Sidebar Navigation Items
-  const navItems = [
+  // Top Floating Glassmorphic Megamenu Navigation Items
+  const megamenuItems = [
     {
       href: '#overview',
-      icon: Layers,
-      labelVi: 'Tổng Quan',
-      labelEn: 'Overview',
-      badge: null,
+      icon: BarChart3,
+      labelVi: 'Phân Tích Chiến Thuật xG',
+      labelEn: 'Opta xG & Tactical Lab',
+      badge: 'xG',
+    },
+    {
+      href: '#timeline',
+      icon: Clock,
+      labelVi: 'Kỷ Nguyên',
+      labelEn: 'Dynasty Eras',
+      badge: '1902–26',
     },
     {
       href: '#museum',
       icon: Trophy,
-      labelVi: 'Bảo Tàng C1',
-      labelEn: 'Match Logs',
+      labelVi: 'Phòng Truyền Thống 15 C1',
+      labelEn: '15 UCL Trophy Room',
       badge: '15',
     },
     {
       href: '#squad',
       icon: Users,
-      labelVi: 'Đội Hình 2026/27',
-      labelEn: 'Squad',
-      badge: '32',
-    },
-    {
-      href: '#player-stats',
-      icon: BarChart3,
-      labelVi: 'Thống Kê Cầu Thủ',
-      labelEn: 'Player Stats',
+      labelVi: '74 Huyền Thoại & Cầu Thủ',
+      labelEn: '74 Legends & Squad',
       badge: '74',
     },
     {
-      href: '#transfers',
-      icon: GitCommit,
-      labelVi: 'Chuyển Nhượng & El Clásico',
-      labelEn: 'Transfers',
-      badge: '10',
+      href: '#clasico',
+      icon: Flame,
+      labelVi: 'El Clásico',
+      labelEn: 'El Clásico',
+      badge: '265',
     },
     {
       href: '#simulator',
       icon: Cpu,
-      labelVi: 'Báo Cáo Chiến Thuật',
-      labelEn: 'Tactical Reports',
+      labelVi: 'Giả Lập Chiến Thuật',
+      labelEn: 'Monte Carlo Sim',
       badge: null,
     },
   ];
 
-  // Tracked Players Watchlist at Bottom of Sidebar with Glowing Dots & Monospace Rating
+  // Royal Watchlist Ribbon Profiles
   const trackedWatchlist = useMemo(() => {
     const items = [
       {
         id: 'kylian-mbappe',
         shortName: 'K. Mbappé',
         pos: 'ST/LW',
-        dotClass: 'bg-orange-500 glow-dot-ember',
+        dotClass: 'bg-[#D4AF37] glow-dot-gold',
         score: '9.48',
       },
       {
@@ -432,9 +453,7 @@ export const App: React.FC = () => {
   const maxCurveVal = Math.max(...allCurveVals) * 1.08;
 
   const primaryCoords = activeCurve.points.map((pt, idx) => {
-    const x =
-      padL +
-      (idx / Math.max(1, activeCurve.points.length - 1)) * innerW;
+    const x = padL + (idx / Math.max(1, activeCurve.points.length - 1)) * innerW;
     const y =
       padT +
       innerH -
@@ -443,9 +462,7 @@ export const App: React.FC = () => {
   });
 
   const secondaryCoords = activeCurve.points.map((pt, idx) => {
-    const x =
-      padL +
-      (idx / Math.max(1, activeCurve.points.length - 1)) * innerW;
+    const x = padL + (idx / Math.max(1, activeCurve.points.length - 1)) * innerW;
     const y =
       padT +
       innerH -
@@ -466,7 +483,7 @@ export const App: React.FC = () => {
       setOverviewAnimKey((k) => k + 1);
     }
     if (href === '#squad') {
-      triggerSquadLabMode('squad_2026_27', '#squad', '#squad');
+      triggerSquadLabMode('all', '#squad', '#squad');
       return;
     }
     if (href === '#player-stats') {
@@ -478,104 +495,51 @@ export const App: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen font-sans flex transition-colors duration-200 ${
-        isDark ? 'bg-[#0A0A0A] text-[#EDEDED]' : 'bg-[#F8FAFC] text-slate-900'
+      ref={appRootRef}
+      className={`min-h-screen font-sans flex flex-col transition-colors duration-200 ${
+        isDark ? 'bg-[#050914] text-[#F8FAFC]' : 'bg-[#F8FAFC] text-slate-900'
       }`}
     >
-      {/* MOBILE SIDEBAR BUTTON */}
-      <button
-        onClick={() => setMobileSidebarOpen((prev) => !prev)}
-        className={`lg:hidden fixed top-3 left-3 z-50 px-3 py-2 rounded-xl border flex items-center gap-2 text-xs font-medium ${
-          isDark
-            ? 'bg-[#121212] border-white/[0.07] text-zinc-200'
-            : 'bg-white border-slate-200 text-slate-800 shadow-sm'
-        }`}
-        aria-label="Toggle Navigation"
-      >
-        {mobileSidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-        <span>Menu</span>
-      </button>
-
-      {mobileSidebarOpen && (
-        <div
-          onClick={() => setMobileSidebarOpen(false)}
-          className="lg:hidden fixed inset-0 z-40 bg-black/80"
-        />
-      )}
-
       {/* ==========================================================================
-         LEFT SIDEBAR (#0D0D0D DARK / #FFFFFF LIGHT, 1PX BORDER)
+         TOP FLOATING GLASSMORPHIC MEGAMENU (ROYAL BERNABÉU EDITORIAL BROADCAST BAR)
          ========================================================================== */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-40 border-r flex flex-col justify-between transition-all duration-200 select-none ${
-          isDark ? 'bg-[#0D0D0D] border-white/[0.07]' : 'bg-white border-slate-200 shadow-sm'
-        } ${sidebarCollapsed ? 'w-[72px]' : 'w-[272px]'} ${
-          mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}
-      >
-        {/* TOP SECTION: MINIMALIST RM LOGO + "HalaMadrid" + COLLAPSE BUTTON + SEARCH */}
-        <div>
-          <div className="h-14 px-3.5 border-b border-white/[0.07] flex items-center justify-between gap-2">
-            <a
-              href="#overview"
-              onClick={(e) => handleNavClick(e, '#overview')}
-              className="flex items-center gap-2.5 min-w-0"
-            >
-              <div className="w-7 h-7 rounded-lg bg-[#121212] border border-white/[0.07] flex items-center justify-center shrink-0">
-                <span className="font-mono text-[11px] font-bold tracking-tighter text-white">
-                  RM
+      <header className="fixed top-3 inset-x-0 z-50 px-3 sm:px-6 lg:px-8 pointer-events-none">
+        <div
+          className={`pointer-events-auto max-w-7xl mx-auto rounded-2xl border backdrop-blur-xl px-3.5 sm:px-5 h-16 flex items-center justify-between gap-3 shadow-[0_20px_50px_rgba(2,6,23,0.85)] transition-all ${
+            isDark
+              ? 'bg-[#0B1224]/90 border-[#D4AF37]/30'
+              : 'bg-white/95 border-[#D4AF37]/40 shadow-lg'
+          }`}
+        >
+          {/* Left: Royal Madrid Crown Emblem & Editorial Brand */}
+          <a
+            href="#overview"
+            onClick={(e) => handleNavClick(e, '#overview')}
+            className="flex items-center gap-3 min-w-0 group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F5D061] via-[#D4AF37] to-[#9A7211] p-[1px] shadow-[0_0_20px_rgba(212,175,55,0.35)] shrink-0">
+              <div className="w-full h-full rounded-[11px] bg-[#050914] flex items-center justify-center">
+                <Crown className="w-5 h-5 text-[#F5D061] group-hover:scale-110 transition-transform" />
+              </div>
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="font-royal text-sm sm:text-base font-extrabold tracking-wider text-[#F8FAFC] truncate">
+                  HALAMADRID
+                </span>
+                <span className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-[#D4AF37]/15 border border-[#D4AF37]/40 font-mono text-[10px] font-bold text-[#F5D061]">
+                  OPTA × BERNABÉU
                 </span>
               </div>
-              {!sidebarCollapsed && (
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-[14px] font-semibold tracking-tight text-white truncate">
-                    HalaMadrid
-                  </span>
-                </div>
-              )}
-            </a>
-
-            <button
-              onClick={() => setSidebarCollapsed((prev) => !prev)}
-              className="hidden lg:flex w-7 h-7 rounded-lg hover:bg-white/[0.07] items-center justify-center text-zinc-400 hover:text-white transition-colors shrink-0"
-              title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-              aria-label="Toggle Sidebar Width"
-            >
-              {sidebarCollapsed ? (
-                <PanelLeftOpen className="w-4 h-4" />
-              ) : (
-                <PanelLeftClose className="w-4 h-4" />
-              )}
-            </button>
-          </div>
-
-          {/* SEARCH BAR (WITHOUT CRAMPED ⌘K BADGE) */}
-          <div className="p-3">
-            <button
-              onClick={() => setCmdOpen(true)}
-              className={`w-full bg-[#121212] hover:bg-white/[0.04] border border-white/[0.07] rounded-xl text-xs text-zinc-400 transition-colors flex items-center ${
-                sidebarCollapsed ? 'justify-center p-2.5' : 'justify-start px-3 py-2'
-              }`}
-            >
-              <span className="flex items-center gap-2 truncate">
-                <Search className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
-                {!sidebarCollapsed && (
-                  <span className="truncate">
-                    {lang === 'vi' ? 'Tìm cầu thủ, trận đấu...' : 'Search players, logs...'}
-                  </span>
-                )}
-              </span>
-            </button>
-          </div>
-
-          {/* NAVIGATION MENU */}
-          <nav className="px-3 space-y-1">
-            {!sidebarCollapsed && (
-              <div className="px-2.5 pt-1 pb-1.5 text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-                {lang === 'vi' ? 'PHÂN HỆ CHỨC NĂNG' : 'WORKSPACE'}
+              <div className="font-mono text-[10px] text-slate-400 truncate">
+                {lang === 'vi' ? 'TẠP CHÍ DỮ LIỆU • 1902–2026/27' : 'EDITORIAL DATA LAB • 1902–2026/27'}
               </div>
-            )}
-            {navItems.map((item) => {
+            </div>
+          </a>
+
+          {/* Center: Megamenu Broadcast Navigation Links */}
+          <nav className="hidden xl:flex items-center gap-1 bg-[#050914]/75 p-1.5 rounded-xl border border-[#D4AF37]/20">
+            {megamenuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeNav === item.href;
               return (
@@ -583,29 +547,26 @@ export const App: React.FC = () => {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  title={lang === 'vi' ? item.labelVi : item.labelEn}
-                  className={`w-full rounded-xl text-[13px] font-medium transition-colors flex items-center ${
-                    sidebarCollapsed ? 'justify-center p-2.5' : 'justify-between px-3 py-2'
-                  } ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap ${
                     isActive
-                      ? 'bg-white/[0.07] text-white border border-white/[0.07]'
-                      : 'text-zinc-400 border border-transparent hover:text-zinc-200 hover:bg-white/[0.04]'
+                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#F5D061] text-[#050914] font-bold shadow-[0_0_16px_rgba(212,175,55,0.35)]'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.06]'
                   }`}
                 >
-                  <span className="flex items-center gap-2.5 min-w-0">
-                    <Icon
-                      className={`w-4 h-4 shrink-0 ${
-                        isActive ? 'text-orange-400' : 'text-zinc-500'
+                  <Icon
+                    className={`w-3.5 h-3.5 shrink-0 ${
+                      isActive ? 'text-[#050914]' : 'text-[#D4AF37]'
+                    }`}
+                  />
+                  <span>{lang === 'vi' ? item.labelVi : item.labelEn}</span>
+                  {item.badge && (
+                    <span
+                      className={`font-mono text-[10px] px-1.5 py-0.2 rounded ${
+                        isActive
+                          ? 'bg-[#050914]/20 text-[#050914] font-extrabold'
+                          : 'bg-[#0B1224] border border-[#D4AF37]/25 text-[#F5D061]'
                       }`}
-                    />
-                    {!sidebarCollapsed && (
-                      <span className="truncate">
-                        {lang === 'vi' ? item.labelVi : item.labelEn}
-                      </span>
-                    )}
-                  </span>
-                  {!sidebarCollapsed && item.badge && (
-                    <span className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-[#121212] border border-white/[0.07] text-zinc-300">
+                    >
                       {item.badge}
                     </span>
                   )}
@@ -613,60 +574,23 @@ export const App: React.FC = () => {
               );
             })}
           </nav>
-        </div>
 
-        {/* BOTTOM SECTION: TRACKED PLAYERS / POSITIONS WITH GLOWING DOTS & MONOSPACE RATINGS */}
-        <div className="border-t border-white/[0.07] p-3 space-y-3">
-          {!sidebarCollapsed ? (
-            <div>
-              <div className="px-2 pb-2 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-zinc-500">
-                <span>{lang === 'vi' ? 'THEO DÕI CẦU THỦ' : 'WATCHED PLAYERS'}</span>
-                <span>IDX</span>
-              </div>
-              <div className="space-y-1">
-                {trackedWatchlist.map((w) => (
-                  <button
-                    key={w.id}
-                    onClick={() => w.profile && setHeroSelectedPlayer(w.profile)}
-                    className="w-full px-2.5 py-1.5 rounded-xl hover:bg-white/[0.07] border border-transparent hover:border-white/[0.07] transition-colors flex items-center justify-between gap-2 text-left group"
-                  >
-                    <span className="flex items-center gap-2.5 min-w-0">
-                      <span className={`w-2 h-2 rounded-full shrink-0 ${w.dotClass}`} />
-                      <span className="text-xs font-medium text-zinc-300 group-hover:text-white truncate">
-                        {w.shortName}
-                      </span>
-                      <span className="font-mono text-[10px] text-zinc-500 shrink-0">
-                        {w.pos}
-                      </span>
-                    </span>
-                    <span className="font-mono text-xs font-semibold text-zinc-200 shrink-0">
-                      {w.score}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center gap-2.5 py-1">
-              {trackedWatchlist.slice(0, 4).map((w) => (
-                <button
-                  key={w.id}
-                  onClick={() => w.profile && setHeroSelectedPlayer(w.profile)}
-                  title={`${w.shortName} (${w.pos}) — ${w.score}`}
-                  className="w-8 h-8 rounded-xl bg-[#121212] border border-white/[0.07] flex items-center justify-center hover:border-white/20"
-                >
-                  <span className={`w-2 h-2 rounded-full ${w.dotClass}`} />
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Right: Quick Search, Theme & Language Controls */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => setCmdOpen(true)}
+              className="h-9 px-3 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/30 text-xs text-slate-300 hover:text-white transition-all flex items-center gap-2"
+              title="Quick Search (Ctrl+K)"
+            >
+              <Search className="w-3.5 h-3.5 text-[#F5D061]" />
+              <span className="hidden md:inline">
+                {lang === 'vi' ? '74 Hồ sơ' : '74 Profiles'}
+              </span>
+              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#0B1224] border border-[#D4AF37]/25 text-[#F5D061]">
+                ⌘K
+              </span>
+            </button>
 
-          {/* Minimalist Theme & Language Toggle Footer Bar */}
-          <div
-            className={`pt-2 border-t border-white/[0.07] flex items-center ${
-              sidebarCollapsed ? 'flex-col gap-2 justify-center' : 'justify-between gap-2'
-            }`}
-          >
             <button
               onClick={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
               title={
@@ -679,770 +603,836 @@ export const App: React.FC = () => {
                     : 'Switch to Dark Mode'
               }
               aria-label="Toggle Theme"
-              className={`w-8 h-7 rounded-lg bg-[#141414] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.06] transition-colors shrink-0 ${
-                isDark ? 'text-neutral-300' : 'text-slate-700'
-              }`}
+              className="w-9 h-9 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/30 flex items-center justify-center text-[#F5D061] transition-colors"
             >
               {isDark ? (
-                <Moon className="w-3.5 h-3.5" strokeWidth={1.75} />
+                <Moon className="w-4 h-4" strokeWidth={1.75} />
               ) : (
-                <Sun className="w-3.5 h-3.5" strokeWidth={1.75} />
+                <Sun className="w-4 h-4" strokeWidth={1.75} />
               )}
             </button>
 
             <button
               onClick={() => setLang((prev) => (prev === 'vi' ? 'en' : 'vi'))}
-              className="h-7 px-2.5 rounded-lg bg-[#141414] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.06] font-mono text-[11px] font-medium text-neutral-300 transition-colors shrink-0"
+              className="h-9 px-2.5 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/30 font-mono text-xs font-bold text-[#F5D061] transition-colors"
             >
               {lang === 'vi' ? 'VN' : 'EN'}
             </button>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="xl:hidden w-9 h-9 rounded-xl bg-[#050914]/85 border border-[#D4AF37]/30 flex items-center justify-center text-[#F5D061]"
+              aria-label="Toggle Megamenu"
+            >
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
           </div>
         </div>
-      </aside>
+
+        {/* Mobile / Tablet Dropdown Megamenu */}
+        {mobileMenuOpen && (
+          <div className="pointer-events-auto xl:hidden max-w-7xl mx-auto mt-2 rounded-2xl bg-[#0B1224]/95 border border-[#D4AF37]/35 backdrop-blur-xl p-3 shadow-2xl grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+            {megamenuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeNav === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between ${
+                    isActive
+                      ? 'bg-[#D4AF37] text-[#050914] font-bold'
+                      : 'text-slate-200 hover:bg-white/[0.06]'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <Icon className="w-4 h-4" />
+                    <span>{lang === 'vi' ? item.labelVi : item.labelEn}</span>
+                  </span>
+                  {item.badge && (
+                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#050914]/25">
+                      {item.badge}
+                    </span>
+                  )}
+                </a>
+              );
+            })}
+          </div>
+        )}
+      </header>
 
       {/* ==========================================================================
-         MAIN CONTENT AREA (#0A0A0A, BENTO STAT CARDS #121212, SMOOTH BEZIER CURVES)
+         ROYAL BERNABÉU 3D HERO SHOWCASE & OPTA TACTICAL INTELLIGENCE (#overview)
          ========================================================================== */}
-      <div
-        className={`flex-1 min-w-0 flex flex-col transition-all duration-200 ${
-          sidebarCollapsed ? 'lg:ml-[72px]' : 'lg:ml-[272px]'
-        }`}
+      <section
+        id="overview"
+        className="relative pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto space-y-6"
       >
-        {/* TOP MINIMALIST TELEMETRY BAR */}
-        <header
-          className={`sticky top-0 z-30 h-14 backdrop-blur-md border-b px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 transition-colors duration-200 ${
-            isDark ? 'bg-[#0A0A0A]/90 border-white/[0.07]' : 'bg-white/90 border-slate-200'
-          }`}
-        >
-          <div className="flex items-center gap-2.5 text-xs text-zinc-400 pl-20 lg:pl-0">
-            <span className="font-medium text-zinc-200">HalaMadrid</span>
-            <span className="text-zinc-600">/</span>
-            <span className="font-mono text-zinc-400">
-              {lang === 'vi'
-                ? (navItems.find((n) => n.href === activeNav)?.labelVi ?? 'Tổng Quan')
-                : (navItems.find((n) => n.href === activeNav)?.labelEn ?? 'Overview')}
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2 py-0.5 rounded-md bg-[#121212] border border-white/[0.07] font-mono text-[11px] text-zinc-300">
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 glow-dot-ember" />
-              <span>{lang === 'vi' ? 'DỮ LIỆU 1902–2026/27' : '1902–2026/27 DATASET'}</span>
-            </span>
-          </div>
+        {/* 3D WebGL Santiago Bernabéu Hero Showcase Card */}
+        <div className="gsap-hero-reveal relative rounded-3xl overflow-hidden border border-[#D4AF37]/35 bg-gradient-to-b from-[#0B1224]/95 via-[#070D1D]/95 to-[#050914]/95 p-6 sm:p-8 lg:p-10 shadow-[0_30px_80px_-20px_rgba(2,6,23,0.95)]">
+          {/* Interactive Three.js 3D Stadium & 15-Star Crown Orbital Canvas */}
+          <BernabeuHero3DCanvas />
 
-          <div className="flex items-center gap-2.5">
-            <a
-              href="#player-stats"
-              onClick={(e) => handleNavClick(e, '#player-stats')}
-              className="px-3 py-1.5 rounded-xl bg-[#121212] hover:bg-white/[0.07] border border-white/[0.07] font-mono text-xs text-zinc-200 flex items-center gap-1.5 transition-colors"
-            >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-orange-400" />
-              <span>{lang === 'vi' ? '74 Hồ sơ' : '74 Profiles'}</span>
-            </a>
-          </div>
-        </header>
-
-        {/* ==========================================================================
-           BENTO GRID EXECUTIVE OVERVIEW (#overview)
-           ========================================================================== */}
-        <section
-          id="overview"
-          className="pt-8 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl w-full mx-auto space-y-5"
-        >
-          {/* Title Row */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-zinc-400 mb-1.5">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-orange-500 shadow-[0_0_10px_#f97316]"></span>
-                </span>
-                <span>REAL MADRID QUANTITATIVE INTELLIGENCE • 1902–2026/27</span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                {lang === 'vi'
-                  ? 'Bách Khoa Toàn Thư & Phân Tích Dữ Liệu Real Madrid'
-                  : 'Real Madrid Historical Archive & Quantitative Data Lab'}
-              </h1>
+          {/* Top Editorial Status Bar */}
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-[#D4AF37]/20">
+            <div className="inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-widest text-[#F5D061]">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F5D061] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#D4AF37] shadow-[0_0_12px_#D4AF37]"></span>
+              </span>
+              <span>REAL MADRID QUANTITATIVE INTELLIGENCE • 1902–2026/27</span>
             </div>
 
-            <div className="flex items-center gap-2 font-mono text-xs text-zinc-400 shrink-0">
-              <span className="px-2.5 py-1 rounded-xl bg-[#121212] border border-white/[0.07] text-zinc-300 whitespace-nowrap">
-                N = 74 Players
+            <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
+              <span className="px-3 py-1 rounded-xl bg-[#050914]/85 border border-[#D4AF37]/30 text-[#F8FAFC]">
+                N = 74 Players • DỮ LIỆU 1902–2026/27
               </span>
-              <span className="px-2.5 py-1 rounded-xl bg-[#121212] border border-white/[0.07] text-emerald-400 whitespace-nowrap hover:border-emerald-500/50 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] transition-all duration-300">
+              <span className="px-3 py-1 rounded-xl bg-[#050914]/85 border border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
                 El Clásico 26/10/2026: 1–2
               </span>
             </div>
           </div>
 
-          {/* ROW 1: 4 BENTO KPI STAT CARDS (#121212, border-white/[0.07], rounded-xl, JetBrains Mono, Motion & Spotlight) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Bento KPI 1: 15 UCL Titles -> Scrolls to #museum */}
-            <div
-              onClick={() => scrollToSection('#museum', '#museum')}
-              style={{ animationDelay: '0ms' }}
-              className="animate-bento-entrance group relative overflow-hidden bg-[#121212] border border-white/[0.07] hover:border-orange-500/40 hover:shadow-[0_8px_30px_-10px_rgba(249,115,22,0.2)] rounded-xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer after:absolute after:inset-x-0 after:top-0 after:h-[1px] after:bg-gradient-to-r after:from-transparent after:via-white/25 after:to-transparent after:opacity-0 group-hover:after:opacity-100 after:transition-opacity"
-            >
-              <div className="text-xs text-neutral-400 whitespace-nowrap group-hover:text-zinc-200 transition-colors">
-                {lang === 'vi' ? 'Kỷ lục Cúp C1 Châu Âu' : 'UEFA Champions League'}
-              </div>
-              <div className="my-3 flex items-baseline justify-between">
-                <div className="font-mono text-3xl font-bold text-white tracking-tight">
-                  {Math.round(uclCount)}
-                </div>
-                <svg
-                  key={`spark-1-${overviewAnimKey}`}
-                  viewBox="0 0 90 28"
-                  className="w-24 h-7 overflow-visible shrink-0 group-hover:scale-105 transition-transform duration-300"
-                >
-                  <defs>
-                    <linearGradient id="sparkGradOrange" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#f97316" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="#f97316" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M 2 24 C 18 22, 32 18, 46 13 C 60 8, 74 5, 88 2 L 88 28 L 2 28 Z"
-                    fill="url(#sparkGradOrange)"
-                  />
-                  <path
-                    d="M 2 24 C 18 22, 32 18, 46 13 C 60 8, 74 5, 88 2"
-                    fill="none"
-                    stroke="#f97316"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    className="animate-sparkline-draw"
-                  />
-                  <circle
-                    cx="88"
-                    cy="2"
-                    r="5.5"
-                    fill="#f97316"
-                    className="animate-ping opacity-60"
-                    style={{ transformOrigin: '88px 2px' }}
-                  />
-                  <circle cx="88" cy="2" r="3" fill="#f97316" />
-                </svg>
-              </div>
-              <div className="font-mono text-[10.5px] xl:text-[11px] text-zinc-500 flex items-center justify-between gap-2 whitespace-nowrap">
-                <span>La Decimoquinta (2024)</span>
-                <span className="text-zinc-300">36 La Liga</span>
-              </div>
-            </div>
-
-            {/* Bento KPI 2: BMV Trident Output -> Scrolls to #bmv-spotlight & filters #10, #7, #5 */}
-            <div
-              onClick={() => triggerSquadLabMode('bmv_trio', '#bmv-spotlight', '#squad')}
-              style={{ animationDelay: '75ms' }}
-              className="animate-bento-entrance group relative overflow-hidden bg-[#121212] border border-white/[0.07] hover:border-emerald-500/40 hover:shadow-[0_8px_30px_-10px_rgba(16,185,129,0.2)] rounded-xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer after:absolute after:inset-x-0 after:top-0 after:h-[1px] after:bg-gradient-to-r after:from-transparent after:via-white/25 after:to-transparent after:opacity-0 group-hover:after:opacity-100 after:transition-opacity"
-            >
-              <div className="text-xs text-neutral-400 whitespace-nowrap group-hover:text-zinc-200 transition-colors">
-                {lang === 'vi' ? 'Hiệu suất Tam Tấu BMV' : 'BMV Trident Output'}
-              </div>
-              <div className="my-3 flex items-baseline justify-between">
-                <div className="whitespace-nowrap">
-                  <span className="font-mono text-3xl font-bold text-white tracking-tight">
-                    {bmvOutputCount.toFixed(2)}
-                  </span>
-                  <span className="font-mono text-xs text-zinc-400 ml-1.5">G+A/90</span>
-                </div>
-                <svg
-                  key={`spark-2-${overviewAnimKey}`}
-                  viewBox="0 0 90 28"
-                  className="w-24 h-7 overflow-visible shrink-0 group-hover:scale-105 transition-transform duration-300"
-                >
-                  <defs>
-                    <linearGradient id="sparkGradEmerald" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M 2 22 C 20 20, 35 12, 52 10 C 68 8, 78 4, 88 3 L 88 28 L 2 28 Z"
-                    fill="url(#sparkGradEmerald)"
-                  />
-                  <path
-                    d="M 2 22 C 20 20, 35 12, 52 10 C 68 8, 78 4, 88 3"
-                    fill="none"
-                    stroke="#10b981"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    className="animate-sparkline-draw"
-                  />
-                  <circle
-                    cx="88"
-                    cy="3"
-                    r="5.5"
-                    fill="#10b981"
-                    className="animate-ping opacity-60"
-                    style={{ transformOrigin: '88px 3px' }}
-                  />
-                  <circle cx="88" cy="3" r="3" fill="#10b981" />
-                </svg>
-              </div>
-              <div className="font-mono text-[10.5px] xl:text-[11px] text-zinc-500 flex items-center justify-between gap-2 whitespace-nowrap">
-                <span>Mbappé 100G • Vini 118G</span>
-                <span className="text-zinc-300">Jude 49G</span>
-              </div>
-            </div>
-
-            {/* Bento KPI 3: Latest El Clásico 1-2 -> Scrolls to #clasico */}
-            <div
-              onClick={() => scrollToSection('#clasico')}
-              style={{ animationDelay: '150ms' }}
-              className="animate-bento-entrance group relative overflow-hidden bg-[#121212] border border-white/[0.07] hover:border-emerald-500/40 hover:shadow-[0_8px_30px_-10px_rgba(16,185,129,0.2)] rounded-xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer after:absolute after:inset-x-0 after:top-0 after:h-[1px] after:bg-gradient-to-r after:from-transparent after:via-white/25 after:to-transparent after:opacity-0 group-hover:after:opacity-100 after:transition-opacity"
-            >
-              <div className="text-xs text-neutral-400 whitespace-nowrap group-hover:text-zinc-200 transition-colors">
-                {lang === 'vi' ? 'El Clásico Gần Nhất' : 'Latest El Clásico'}
-              </div>
-              <div className="my-3 flex items-baseline justify-between whitespace-nowrap">
-                <div
-                  key={`score-flip-${overviewAnimKey}`}
-                  className="font-mono text-3xl font-bold text-white tracking-tight animate-score-flip"
-                >
-                  {Math.round(clasicoBarcaScore)} – {Math.round(clasicoRealScore)}
-                </div>
-                <span className="inline-flex items-center gap-1.5 font-mono text-xs text-emerald-400">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                  </span>
-                  <span>Camp Nou (A)</span>
-                </span>
-              </div>
-              <div className="font-mono text-[10.5px] xl:text-[11px] text-zinc-500 flex items-center justify-between gap-2 whitespace-nowrap">
-                <span>Mbappé 41&apos;, 87&apos; (100th G)</span>
-                <span className="text-zinc-300">Camavinga 87&apos; A</span>
-              </div>
-            </div>
-
-            {/* Bento KPI 4: Monte Carlo Win Prob / DNA Remontada -> Scrolls to #simulator */}
-            <div
-              onClick={() => scrollToSection('#simulator', '#simulator')}
-              style={{ animationDelay: '225ms' }}
-              className="animate-bento-entrance group relative overflow-hidden bg-[#121212] border border-white/[0.07] hover:border-purple-500/40 hover:shadow-[0_8px_30px_-10px_rgba(168,85,247,0.2)] rounded-xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer after:absolute after:inset-x-0 after:top-0 after:h-[1px] after:bg-gradient-to-r after:from-transparent after:via-white/25 after:to-transparent after:opacity-0 group-hover:after:opacity-100 after:transition-opacity"
-            >
-              <div className="text-xs text-neutral-400 whitespace-nowrap group-hover:text-zinc-200 transition-colors">
-                {lang === 'vi' ? "DNA Remontada (76'–90+')" : "DNA Remontada (76'–90+')"}
-              </div>
-              <div className="my-3 flex items-baseline justify-between">
-                <div className="font-mono text-3xl font-bold text-white tracking-tight">
-                  {remontadaPctCount.toFixed(1)}%
-                </div>
-                <svg
-                  key={`spark-4-${overviewAnimKey}`}
-                  viewBox="0 0 90 28"
-                  className="w-24 h-7 overflow-visible shrink-0 group-hover:scale-105 transition-transform duration-300"
-                >
-                  <defs>
-                    <linearGradient id="sparkGradPurple" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#a855f7" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="#a855f7" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M 2 20 C 20 19, 34 15, 50 9 C 66 4, 76 5, 88 2 L 88 28 L 2 28 Z"
-                    fill="url(#sparkGradPurple)"
-                  />
-                  <path
-                    d="M 2 20 C 20 19, 34 15, 50 9 C 66 4, 76 5, 88 2"
-                    fill="none"
-                    stroke="#a855f7"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    className="animate-sparkline-draw"
-                  />
-                  <circle
-                    cx="88"
-                    cy="2"
-                    r="5.5"
-                    fill="#a855f7"
-                    className="animate-ping opacity-60"
-                    style={{ transformOrigin: '88px 2px' }}
-                  />
-                  <circle cx="88" cy="2" r="3" fill="#a855f7" />
-                </svg>
-              </div>
-              <div className="font-mono text-[10.5px] xl:text-[11px] text-zinc-500 flex items-center justify-between gap-2 whitespace-nowrap">
+          {/* Center Editorial Showcase: La Decimoquinta (15 UCL) + Royal Headline */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-6 sm:py-8">
+            <div className="lg:col-span-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/45 text-[#F5D061] text-xs font-bold tracking-wider uppercase">
+                <Sparkles className="w-3.5 h-3.5" />
                 <span>
-                  χ² = {dataset.remontadaAnalytics.chiSquareStat.toFixed(2)} (p &lt; 0.001)
-                </span>
-                <span className="text-zinc-300">CR7: 450G</span>
-              </div>
-            </div>
-          </div>
-
-          {/* ROW 2: BENTO SMOOTH BEZIER CURVE ANALYTICS (8 COL) + FEATURED QUARTET BENTO LIST (4 COL) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {/* Left 8-Col Bento Card: Smooth Cubic-Bezier Curve Chart */}
-            <div className="lg:col-span-8 bg-[#121212] border border-white/[0.07] rounded-xl p-5 sm:p-6 flex flex-col justify-between">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/[0.07]">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <SlidersHorizontal className="w-4 h-4 text-orange-400" />
-                    <h2 className="text-sm sm:text-base font-semibold text-white">
-                      {lang === 'vi' ? activeCurve.titleVi : activeCurve.titleEn}
-                    </h2>
-                  </div>
-                  <div className="font-mono text-[11px] text-zinc-400 mt-1">
-                    {activeCurve.deltaBadge}
-                  </div>
-                </div>
-
-                {/* Curve Mode Switcher */}
-                <div className="flex items-center gap-1 bg-[#0A0A0A] p-1 rounded-xl border border-white/[0.07] self-start">
-                  {(
-                    [
-                      { id: 'xg_trajectory', label: 'Goals vs xG' },
-                      { id: 'remontada_curve', label: 'Remontada 90+’' },
-                      { id: 'trident_velocity', label: 'Velocity Curve' },
-                    ] as const
-                  ).map((t) => (
-                    <button
-                      key={t.id}
-                      onClick={() => setCurveTab(t.id)}
-                      className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition-colors whitespace-nowrap ${
-                        curveTab === t.id
-                          ? 'bg-white/[0.08] text-white font-semibold'
-                          : 'text-zinc-400 hover:text-zinc-200'
-                      }`}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Smooth Cubic-Bezier SVG Canvas */}
-              <div className="my-4">
-                <svg
-                  viewBox={`0 0 ${chartW} ${chartH}`}
-                  className="w-full h-auto overflow-visible select-none"
-                >
-                  <defs>
-                    <linearGradient id="emberSmoothFill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#f97316" stopOpacity="0.22" />
-                      <stop offset="100%" stopColor="#f97316" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Horizontal Hairline Grid */}
-                  {[0, 0.25, 0.5, 0.75, 1].map((step) => {
-                    const y = padT + step * innerH;
-                    const val = maxCurveVal - step * (maxCurveVal - minCurveVal);
-                    return (
-                      <g key={step}>
-                        <line
-                          x1={padL}
-                          y1={y}
-                          x2={chartW - padR}
-                          y2={y}
-                          stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(15,23,42,0.08)'}
-                          strokeWidth="1"
-                        />
-                        <text
-                          x={padL - 8}
-                          y={y + 3}
-                          textAnchor="end"
-                          fill={isDark ? '#71717a' : '#64748b'}
-                          fontSize="10"
-                          className="font-mono"
-                        >
-                          {val.toFixed(0)}
-                        </text>
-                      </g>
-                    );
-                  })}
-
-                  {/* Area under Primary Smooth Bezier Curve */}
-                  {primaryAreaPath && <path d={primaryAreaPath} fill="url(#emberSmoothFill)" />}
-
-                  {/* Secondary Smooth Bezier Curve (Dashed Baseline / Expected) */}
-                  <path
-                    d={secondaryBezier}
-                    fill="none"
-                    stroke={isDark ? '#71717a' : '#94a3b8'}
-                    strokeWidth="1.75"
-                    strokeDasharray="4 4"
-                  />
-
-                  {/* Primary Smooth Bezier Curve (Ember Orange) */}
-                  <path
-                    d={primaryBezier}
-                    fill="none"
-                    stroke="#f97316"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-
-                  {/* Data Nodes & Monospace Value Callouts */}
-                  {primaryCoords.map((c, idx) => {
-                    const sec = secondaryCoords[idx];
-                    return (
-                      <g key={c.pt.label}>
-                        {/* Vertical guide on hover/node */}
-                        <line
-                          x1={c.x}
-                          y1={c.y}
-                          x2={c.x}
-                          y2={padT + innerH}
-                          stroke={isDark ? 'rgba(255,255,255,0.04)' : 'rgba(15,23,42,0.06)'}
-                          strokeWidth="1"
-                        />
-                        <circle
-                          cx={sec.x}
-                          cy={sec.y}
-                          r="3"
-                          fill={isDark ? '#121212' : '#ffffff'}
-                          stroke={isDark ? '#71717a' : '#64748b'}
-                          strokeWidth="1.5"
-                        />
-                        <circle
-                          cx={c.x}
-                          cy={c.y}
-                          r="4"
-                          fill={isDark ? '#0A0A0A' : '#ffffff'}
-                          stroke="#f97316"
-                          strokeWidth="2.2"
-                        />
-                        <text
-                          x={c.x}
-                          y={c.y - 10}
-                          textAnchor="middle"
-                          fill={isDark ? '#f4f4f5' : '#0f172a'}
-                          fontSize="10"
-                          fontWeight="600"
-                          className="font-mono"
-                        >
-                          {c.pt.primary}
-                          {activeCurve.unit === '%' ? '%' : ''}
-                        </text>
-                        <text
-                          x={c.x}
-                          y={padT + innerH + 18}
-                          textAnchor="middle"
-                          fill={isDark ? '#a1a1aa' : '#475569'}
-                          fontSize="10"
-                          className="font-mono"
-                        >
-                          {c.pt.label}
-                        </text>
-                      </g>
-                    );
-                  })}
-                </svg>
-              </div>
-
-              {/* Legend Footer */}
-              <div className="pt-3 border-t border-white/[0.07] flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-400">
-                <div className="flex items-center gap-5">
-                  <span className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-orange-500 glow-dot-ember" />
-                    <span>
-                      {lang === 'vi' ? activeCurve.primaryLabelVi : activeCurve.primaryLabelEn}
-                    </span>
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <span className="w-3 h-0.5 bg-zinc-500 inline-block" />
-                    <span>
-                      {lang === 'vi' ? activeCurve.secondaryLabelVi : activeCurve.secondaryLabelEn}
-                    </span>
-                  </span>
-                </div>
-                <span className="font-mono text-[11px] text-zinc-400">
-                  Cubic-Bezier Spline • OLS Verified
-                </span>
-              </div>
-            </div>
-
-            {/* Right 4-Col Bento Card: 2026/27 Featured Spotlight Quartet */}
-            <div className="lg:col-span-4 bg-[#121212] border border-white/[0.07] rounded-xl p-5 flex flex-col justify-between">
-              <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.07]">
-                <div>
-                  <h2 className="text-sm font-semibold text-white">
-                    {lang === 'vi' ? 'Trụ Cột Đội Hình 2026/27' : '2026/27 Core Spotlight'}
-                  </h2>
-                  <p className="text-[11px] text-zinc-400 mt-0.5">
-                    {lang === 'vi'
-                      ? 'Click vào cầu thủ để mở Hồ sơ 12 trường'
-                      : 'Click any player to inspect full profile'}
-                  </p>
-                </div>
-                <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-white/[0.06] border border-white/[0.07] text-zinc-300">
-                  BMV + #25
-                </span>
-              </div>
-
-              <div className="my-3 space-y-2.5">
-                {featuredStars.map((star) => (
-                  <div
-                    key={star.id}
-                    onClick={() => setHeroSelectedPlayer(star)}
-                    className="p-2.5 rounded-xl bg-[#0A0A0A] hover:bg-white/[0.05] border border-white/[0.07] transition-colors cursor-pointer flex items-center justify-between gap-3 group"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-11 h-11 rounded-lg overflow-hidden bg-[#121212] border border-white/[0.07] shrink-0">
-                        <PlayerAvatar
-                          src={star.imageUrl}
-                          name={star.name}
-                          shirtNumber={star.shirtNumber}
-                          position={star.specificPositions.join('/')}
-                          priority
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-xs font-bold text-orange-400">
-                            #{star.shirtNumber}
-                          </span>
-                          <span className="text-xs font-semibold text-white truncate group-hover:text-orange-300 transition-colors">
-                            {star.name}
-                          </span>
-                        </div>
-                        <div className="text-[11px] text-zinc-400 flex items-center gap-1.5 mt-0.5">
-                          <CountryFlag nationality={star.nationality} />
-                          <span className="font-mono text-[10px] text-zinc-300">
-                            {star.specificPositions.join('/')}
-                          </span>
-                          <span className="text-zinc-600">•</span>
-                          <span className="font-mono text-[10px] text-zinc-400">
-                            {star.stats.topSpeedKmh.toFixed(1)} km/h
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-right shrink-0">
-                      <div className="font-mono text-xs font-bold text-white">
-                        {star.stats.appearances}M • {star.stats.goals}G • {star.stats.assists}A
-                      </div>
-                      <div className="font-mono text-[10px] text-emerald-400 mt-0.5 flex items-center justify-end gap-0.5">
-                        <span>{star.stats.gaPer90.toFixed(2)} G+A/90</span>
-                        <ArrowUpRight className="w-3 h-3" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="pt-3 border-t border-white/[0.07] flex items-center justify-between text-xs">
-                <a
-                  href="#squad"
-                  onClick={(e) => handleNavClick(e, '#squad')}
-                  className="text-zinc-300 hover:text-white font-medium flex items-center gap-1"
-                >
-                  <span>{lang === 'vi' ? 'Xem toàn bộ 32 cầu thủ' : 'View all 32 squad players'}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
-                <span className="font-mono text-[11px] text-zinc-500">+ 42 Legends</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ==========================================================================
-           MAIN INTERACTIVE ENCYCLOPEDIA & DATA SCIENCE SECTIONS
-           ========================================================================== */}
-        <main className="flex-1">
-          {/* 1. Historical Timeline 1902–2026 & Bernabéu Evolution */}
-          <TimelineSection eras={dataset.historicalEras} lang={lang} />
-
-          {/* 2. Match Logs (15 UCL Finals & 2D Tactical Pitch Blueprints) */}
-          <TrophyMuseumSection uclTitles={dataset.championsLeagueTitles} lang={lang} />
-
-          {/* 3 & 4. Squad (32 + 42 Legends) & Player Stats (6-Axis Radar, EDA Lab & Matrix) */}
-          <LegendsSquadLabSection
-            players={dataset.players}
-            tridentAnalytics={dataset.trident2026Analytics}
-            lang={lang}
-            externalCommand={squadLabCommand}
-          />
-
-          {/* 5. Transfers & Squad Acquisition Ledger (2024–2026/27) */}
-          <section
-            id="transfers"
-            className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/[0.07] scroll-mt-16"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
-              <div>
-                <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-zinc-400 mb-1.5">
-                  <GitCommit className="w-3.5 h-3.5 text-orange-400" />
-                  <span>TRANSFERS & SQUAD ACQUISITION LEDGER (2024–2026/27)</span>
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   {lang === 'vi'
-                    ? 'Hồ Sơ Chuyển Nhượng & Định Giá Đội Hình 2024–2026/27'
-                    : 'Strategic Transfers & Valuation Matrix (2024–2026/27)'}
-                </h2>
+                    ? 'Ấn Phẩm Đặc Biệt • Santiago Bernabéu & Opta Analyst'
+                    : 'Special Editorial • Santiago Bernabéu & Opta Analyst'}
+                </span>
               </div>
-              <div className="font-mono text-xs text-zinc-400 bg-[#121212] border border-white/[0.07] rounded-xl px-3.5 py-2">
-                Total Tracked Arrivals: <span className="text-white font-bold">10 Players</span>
-              </div>
-            </div>
 
-            <div className="bg-[#121212] border border-white/[0.07] rounded-xl overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
-                  <thead>
-                    <tr className="border-b border-white/[0.07] text-[11px] font-mono uppercase text-zinc-400 bg-[#0D0D0D]">
-                      <th className="py-3 px-4">{lang === 'vi' ? 'Cầu thủ' : 'Player'}</th>
-                      <th className="py-3 px-3">{lang === 'vi' ? 'Vị trí' : 'Pos'}</th>
-                      <th className="py-3 px-3">{lang === 'vi' ? 'Kỳ CN' : 'Window'}</th>
-                      <th className="py-3 px-3">{lang === 'vi' ? 'CLB Cũ' : 'Previous Club'}</th>
-                      <th className="py-3 px-3">{lang === 'vi' ? 'Hình thức / Phí' : 'Fee / Type'}</th>
-                      <th className="py-3 px-3">{lang === 'vi' ? 'Định giá' : 'Market Val'}</th>
-                      <th className="py-3 px-3 text-right">
-                        {lang === 'vi' ? 'Thống kê RM (Tr/B/KT/Cúp)' : 'RM Stats (M/G/A/T)'}
-                      </th>
-                      <th className="py-3 px-4 text-right">G+A/90</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/[0.07]">
-                    {strategicTransfers.map((item) => (
-                      <tr
-                        key={item.id}
-                        onClick={() => setHeroSelectedPlayer(item.player)}
-                        className="hover:bg-white/[0.04] cursor-pointer transition-colors"
-                      >
-                        <td className="py-3 px-4 font-medium text-white flex items-center gap-2.5 whitespace-nowrap">
-                          <span className="font-mono text-xs text-orange-400 w-7">
-                            #{item.player.shirtNumber}
-                          </span>
-                          <CountryFlag nationality={item.player.nationality} />
-                          <span className="font-semibold">{item.player.name}</span>
-                        </td>
-                        <td className="py-3 px-3 font-mono text-zinc-300 whitespace-nowrap">
-                          {item.player.specificPositions.join('/')}
-                        </td>
-                        <td className="py-3 px-3 font-mono text-zinc-400 whitespace-nowrap">
-                          {item.window}
-                        </td>
-                        <td className="py-3 px-3 text-zinc-300 whitespace-nowrap">{item.from}</td>
-                        <td className="py-3 px-3 font-mono text-zinc-300 whitespace-nowrap">
-                          {item.fee}
-                        </td>
-                        <td className="py-3 px-3 font-mono text-emerald-400 font-semibold whitespace-nowrap">
-                          {item.val}
-                        </td>
-                        <td className="py-3 px-3 font-mono text-white text-right whitespace-nowrap">
-                          {item.player.stats.appearances}M • {item.player.stats.goals}G •{' '}
-                          {item.player.stats.assists}A • {item.player.stats.trophies}T
-                        </td>
-                        <td className="py-3 px-4 font-mono text-orange-400 font-semibold text-right whitespace-nowrap">
-                          {item.player.stats.gaPer90.toFixed(2)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <h1 className="font-royal text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#F8FAFC] leading-[1.12]">
+                {lang === 'vi'
+                  ? 'Bách Khoa Toàn Thư & Phân Tích Dữ Liệu Real Madrid'
+                  : 'Real Madrid Historical Archive & Quantitative Data Lab'}
+              </h1>
+
+              <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+                {lang === 'vi'
+                  ? 'Tôn vinh 15 chức vô địch UEFA Champions League (La Decimoquinta), hồ sơ định lượng 74 huyền thoại & cầu thủ mùa 2026/27, toàn bộ 265 trận El Clásico lịch sử và mô hình giả lập chiến thuật 10.000 trận.'
+                  : 'Celebrating 15 UEFA Champions League crowns (La Decimoquinta), 74 player & legend quantitative profiles through 2026/27, all 265 official El Clásico matches, and 10,000-match Monte Carlo tactical simulations.'}
+              </p>
+
+              {/* Quick Editorial CTA Pills */}
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => scrollToSection('#museum', '#museum')}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5D061] text-[#050914] font-extrabold text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(212,175,55,0.4)] hover:brightness-110 transition-all flex items-center gap-2"
+                >
+                  <Trophy className="w-4 h-4" />
+                  <span>
+                    {lang === 'vi'
+                      ? 'Khám Phá 15 Chung Kết C1'
+                      : 'Explore All 15 UCL Finals'}
+                  </span>
+                </button>
+                <button
+                  onClick={() => triggerSquadLabMode('squad_2026_27', '#squad', '#squad')}
+                  className="px-4 py-2.5 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/40 text-[#F8FAFC] font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2"
+                >
+                  <Users className="w-4 h-4 text-[#F5D061]" />
+                  <span>
+                    {lang === 'vi'
+                      ? 'Đội Hình 2026/27 & 74 Hồ Sơ'
+                      : '2026/27 Squad & 74 Profiles'}
+                  </span>
+                </button>
               </div>
             </div>
-          </section>
 
-          {/* El Clásico & Stoppage-Time Remontada Analytics */}
-          <ClasicoRemontadaSection
-            clasicoHistory={dataset.elClasicoHistory}
-            remontadaAnalytics={dataset.remontadaAnalytics}
-            headToHead={dataset.metadata.elClasicoHeadToHead}
-            lang={lang}
-          />
+            {/* Right 4-Col: Monumental 15 UCL La Decimoquinta Emblem Box */}
+            <div className="lg:col-span-4 flex justify-center lg:justify-end">
+              <div
+                onClick={() => scrollToSection('#museum', '#museum')}
+                className="cursor-pointer group w-full max-w-xs rounded-2xl bg-[#050914]/85 border border-[#D4AF37]/45 p-5 text-center shadow-[0_0_40px_rgba(212,175,55,0.18)] hover:border-[#F5D061] transition-all"
+              >
+                <div className="font-mono text-[10px] uppercase tracking-widest text-[#F5D061]">
+                  UEFA CHAMPIONS LEAGUE DYNASTY
+                </div>
+                <div className="font-royal text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#FFF3B0] via-[#F5D061] to-[#D4AF37] my-1">
+                  15
+                </div>
+                <div className="font-royal text-xs font-bold uppercase tracking-widest text-[#F8FAFC]">
+                  LA DECIMOQUINTA (1956–2024)
+                </div>
+                <div className="mt-3 pt-3 border-t border-[#D4AF37]/20 flex items-center justify-between font-mono text-[11px] text-slate-300">
+                  <span>100% Finals Won (1998–2024)</span>
+                  <span className="text-[#F5D061] group-hover:translate-x-0.5 transition-transform">
+                    36 La Liga →
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          {/* 6. Tactical Reports & 10,000-Match Monte Carlo Simulator */}
-          <TacticalMonteCarloSection
-            players={dataset.players}
-            monteCarlo={dataset.monteCarloSimulation}
-            lang={lang}
-          />
+          {/* Royal Watchlist Quick-Inspect Bar */}
+          <div className="relative z-10 pt-4 border-t border-[#D4AF37]/20 flex flex-wrap items-center justify-between gap-2">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-400">
+              {lang === 'vi' ? 'THEO DÕI CẦU THỦ TRỤ CỘT (OPTA IDX):' : 'TRACKED CORE PLAYERS (OPTA IDX):'}
+            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              {trackedWatchlist.map((w) => (
+                <button
+                  key={w.id}
+                  onClick={() => w.profile && setHeroSelectedPlayer(w.profile)}
+                  className="px-2.5 py-1 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/25 hover:border-[#D4AF37] transition-all flex items-center gap-2 text-xs"
+                >
+                  <span className={`w-2 h-2 rounded-full ${w.dotClass}`} />
+                  <span className="font-semibold text-[#F8FAFC]">{w.shortName}</span>
+                  <span className="font-mono text-[10px] text-slate-400">{w.pos}</span>
+                  <span className="font-mono text-[11px] font-bold text-[#F5D061]">{w.score}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
-          {/* Club Institutional Culture & Leadership */}
-          <Madridista101Section leaders={dataset.clubLeaders} lang={lang} />
-        </main>
-
-        {/* 2-COLUMN PLAYER PROFILE MODAL */}
-        {heroSelectedPlayer && (
-          <PlayerWalkoutModal
-            player={heroSelectedPlayer}
-            lang={lang}
-            onClose={() => setHeroSelectedPlayer(null)}
-          />
-        )}
-
-        {/* COMMAND PALETTE MODAL [⌘ K] */}
-        {cmdOpen && (
+        {/* ROW 1: 4 ROYAL OPTA KPI STAT CARDS */}
+        <div className="gsap-hero-reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* KPI 1: 15 UCL Titles -> Scrolls to #museum */}
           <div
-            onClick={() => setCmdOpen(false)}
-            className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm flex items-start justify-center pt-20 px-4"
+            onClick={() => scrollToSection('#museum', '#museum')}
+            className="glass-royal group relative overflow-hidden rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer"
           >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-xl bg-[#121212] border border-white/[0.12] rounded-xl shadow-2xl overflow-hidden"
-            >
-              <div className="px-4 py-3 border-b border-white/[0.07] flex items-center gap-3">
-                <Search className="w-4 h-4 text-zinc-400 shrink-0" />
-                <input
-                  type="text"
-                  autoFocus
-                  value={cmdQuery}
-                  onChange={(e) => setCmdQuery(e.target.value)}
-                  placeholder={
-                    lang === 'vi'
-                      ? 'Nhập tên cầu thủ, số áo (#10, #7, #5, #12...) hoặc vị trí...'
-                      : 'Search player name, shirt number (#10, #7, #5...), or position...'
-                  }
-                  className="w-full bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none"
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#F5D061]">
+              {lang === 'vi' ? 'Kỷ lục Cúp C1 Châu Âu' : 'UEFA Champions League'}
+            </div>
+            <div className="my-3 flex items-baseline justify-between">
+              <div className="font-mono text-3xl font-bold text-[#F8FAFC] tracking-tight">
+                {Math.round(uclCount)}
+              </div>
+              <svg
+                key={`spark-1-${overviewAnimKey}`}
+                viewBox="0 0 90 28"
+                className="w-24 h-7 overflow-visible shrink-0 group-hover:scale-105 transition-transform duration-300"
+              >
+                <defs>
+                  <linearGradient id="sparkGradGold" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.32" />
+                    <stop offset="100%" stopColor="#D4AF37" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M 2 24 C 18 22, 32 18, 46 13 C 60 8, 74 5, 88 2 L 88 28 L 2 28 Z"
+                  fill="url(#sparkGradGold)"
                 />
-                <kbd className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#0A0A0A] border border-white/[0.07] text-zinc-400">
-                  ESC
-                </kbd>
+                <path
+                  d="M 2 24 C 18 22, 32 18, 46 13 C 60 8, 74 5, 88 2"
+                  fill="none"
+                  stroke="#D4AF37"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  className="animate-sparkline-draw"
+                />
+                <circle cx="88" cy="2" r="3" fill="#F5D061" />
+              </svg>
+            </div>
+            <div className="font-mono text-[10.5px] xl:text-[11px] text-slate-400 flex items-center justify-between gap-2 whitespace-nowrap">
+              <span>La Decimoquinta (2024)</span>
+              <span className="text-[#F5D061]">36 La Liga</span>
+            </div>
+          </div>
+
+          {/* KPI 2: BMV Trident Output -> Scrolls to #bmv-spotlight */}
+          <div
+            onClick={() => triggerSquadLabMode('bmv_trio', '#bmv-spotlight', '#squad')}
+            className="glass-royal group relative overflow-hidden rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer"
+          >
+            <div className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+              {lang === 'vi' ? 'Hiệu suất Tam Tấu BMV' : 'BMV Trident Output'}
+            </div>
+            <div className="my-3 flex items-baseline justify-between">
+              <div className="whitespace-nowrap">
+                <span className="font-mono text-3xl font-bold text-[#F8FAFC] tracking-tight">
+                  {bmvOutputCount.toFixed(2)}
+                </span>
+                <span className="font-mono text-xs text-slate-400 ml-1.5">G+A/90</span>
+              </div>
+              <svg
+                key={`spark-2-${overviewAnimKey}`}
+                viewBox="0 0 90 28"
+                className="w-24 h-7 overflow-visible shrink-0 group-hover:scale-105 transition-transform duration-300"
+              >
+                <defs>
+                  <linearGradient id="sparkGradEmerald" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.28" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M 2 22 C 20 20, 35 12, 52 10 C 68 8, 78 4, 88 3 L 88 28 L 2 28 Z"
+                  fill="url(#sparkGradEmerald)"
+                />
+                <path
+                  d="M 2 22 C 20 20, 35 12, 52 10 C 68 8, 78 4, 88 3"
+                  fill="none"
+                  stroke="#10b981"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  className="animate-sparkline-draw"
+                />
+                <circle cx="88" cy="3" r="3" fill="#10b981" />
+              </svg>
+            </div>
+            <div className="font-mono text-[10.5px] xl:text-[11px] text-slate-400 flex items-center justify-between gap-2 whitespace-nowrap">
+              <span>Mbappé 100G • Vini 118G</span>
+              <span className="text-[#F8FAFC]">Jude 49G</span>
+            </div>
+          </div>
+
+          {/* KPI 3: Latest El Clásico 1-2 -> Scrolls to #clasico */}
+          <div
+            onClick={() => scrollToSection('#clasico', '#clasico')}
+            className="glass-royal group relative overflow-hidden rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer"
+          >
+            <div className="text-xs font-semibold uppercase tracking-wider text-sky-400">
+              {lang === 'vi' ? 'El Clásico Gần Nhất' : 'Latest El Clásico'}
+            </div>
+            <div className="my-3 flex items-baseline justify-between whitespace-nowrap">
+              <div
+                key={`score-flip-${overviewAnimKey}`}
+                className="font-mono text-3xl font-bold text-[#F8FAFC] tracking-tight animate-score-flip"
+              >
+                {Math.round(clasicoBarcaScore)} – {Math.round(clasicoRealScore)}
+              </div>
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs text-emerald-400">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                </span>
+                <span>Camp Nou (A)</span>
+              </span>
+            </div>
+            <div className="font-mono text-[10.5px] xl:text-[11px] text-slate-400 flex items-center justify-between gap-2 whitespace-nowrap">
+              <span>Mbappé 41&apos;, 87&apos; (100th G)</span>
+              <span className="text-[#F8FAFC]">Camavinga 87&apos; A</span>
+            </div>
+          </div>
+
+          {/* KPI 4: DNA Remontada -> Scrolls to #simulator */}
+          <div
+            onClick={() => scrollToSection('#simulator', '#simulator')}
+            className="glass-royal group relative overflow-hidden rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer"
+          >
+            <div className="text-xs font-semibold uppercase tracking-wider text-purple-400">
+              {lang === 'vi' ? "DNA Remontada (76'–90+')" : "DNA Remontada (76'–90+')"}
+            </div>
+            <div className="my-3 flex items-baseline justify-between">
+              <div className="font-mono text-3xl font-bold text-[#F8FAFC] tracking-tight">
+                {remontadaPctCount.toFixed(1)}%
+              </div>
+              <svg
+                key={`spark-4-${overviewAnimKey}`}
+                viewBox="0 0 90 28"
+                className="w-24 h-7 overflow-visible shrink-0 group-hover:scale-105 transition-transform duration-300"
+              >
+                <defs>
+                  <linearGradient id="sparkGradPurple" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#a855f7" stopOpacity="0.28" />
+                    <stop offset="100%" stopColor="#a855f7" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M 2 20 C 20 19, 34 15, 50 9 C 66 4, 76 5, 88 2 L 88 28 L 2 28 Z"
+                  fill="url(#sparkGradPurple)"
+                />
+                <path
+                  d="M 2 20 C 20 19, 34 15, 50 9 C 66 4, 76 5, 88 2"
+                  fill="none"
+                  stroke="#a855f7"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  className="animate-sparkline-draw"
+                />
+                <circle cx="88" cy="2" r="3" fill="#a855f7" />
+              </svg>
+            </div>
+            <div className="font-mono text-[10.5px] xl:text-[11px] text-slate-400 flex items-center justify-between gap-2 whitespace-nowrap">
+              <span>
+                χ² = {dataset.remontadaAnalytics.chiSquareStat.toFixed(2)} (p &lt; 0.001)
+              </span>
+              <span className="text-[#F8FAFC]">CR7: 450G</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ROW 2: INTERACTIVE 2D/3D OPTA TACTICAL PITCH, BMV SHOT MAP & 6-AXIS RADAR */}
+        <OptaTacticalPitchLab
+          players={dataset.players}
+          lang={lang}
+          onSelectPlayer={(p) => setHeroSelectedPlayer(p)}
+        />
+
+        {/* ROW 3: SMOOTH CUBIC-BEZIER XG TRAJECTORY (8 COL) + 2026/27 CORE SPOTLIGHT QUARTET (4 COL) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {/* Left 8-Col Card: Smooth Cubic-Bezier Curve Chart */}
+          <div className="lg:col-span-8 glass-royal rounded-2xl p-5 sm:p-6 flex flex-col justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#D4AF37]/20">
+              <div>
+                <div className="flex items-center gap-2">
+                  <SlidersHorizontal className="w-4 h-4 text-[#D4AF37]" />
+                  <h2 className="font-royal text-sm sm:text-base font-bold text-[#F8FAFC]">
+                    {lang === 'vi' ? activeCurve.titleVi : activeCurve.titleEn}
+                  </h2>
+                </div>
+                <div className="font-mono text-[11px] text-[#F5D061] mt-1">
+                  {activeCurve.deltaBadge}
+                </div>
               </div>
 
-              <div className="max-h-80 overflow-y-auto p-2 space-y-1">
-                {searchResults.map((p) => (
+              {/* Curve Mode Switcher */}
+              <div className="flex items-center gap-1 bg-[#050914] p-1 rounded-xl border border-[#D4AF37]/25 self-start">
+                {(
+                  [
+                    { id: 'xg_trajectory', label: 'Goals vs xG' },
+                    { id: 'remontada_curve', label: 'Remontada 90+’' },
+                    { id: 'trident_velocity', label: 'Velocity Curve' },
+                  ] as const
+                ).map((t) => (
                   <button
-                    key={p.id}
-                    onClick={() => {
-                      setHeroSelectedPlayer(p);
-                      setCmdOpen(false);
-                    }}
-                    className="w-full px-3 py-2 rounded-xl hover:bg-white/[0.07] flex items-center justify-between gap-3 text-left transition-colors"
+                    key={t.id}
+                    onClick={() => setCurveTab(t.id)}
+                    className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition-colors whitespace-nowrap ${
+                      curveTab === t.id
+                        ? 'bg-[#D4AF37] text-[#050914] font-bold'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
                   >
-                    <span className="flex items-center gap-2.5 min-w-0">
-                      <span className="font-mono text-xs font-bold text-orange-400 w-7">
-                        #{p.shirtNumber}
-                      </span>
-                      <CountryFlag nationality={p.nationality} />
-                      <span className="text-xs font-semibold text-white truncate">{p.name}</span>
-                      <span className="font-mono text-[10px] text-zinc-400">
-                        {p.specificPositions.join('/')}
-                      </span>
-                    </span>
-                    <span className="font-mono text-xs text-zinc-300 shrink-0">
-                      {p.stats.appearances}M • {p.stats.goals}G • {p.stats.assists}A
-                    </span>
+                    {t.label}
                   </button>
                 ))}
               </div>
             </div>
-          </div>
-        )}
 
-        {/* MINIMALIST EMBER FOOTER */}
-        <footer className="bg-[#0D0D0D] border-t border-white/[0.07] py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-md bg-[#121212] border border-white/[0.07] flex items-center justify-center font-mono text-[10px] font-bold text-white">
-                RM
+            {/* Smooth Cubic-Bezier SVG Canvas */}
+            <div className="my-4">
+              <svg
+                viewBox={`0 0 ${chartW} ${chartH}`}
+                className="w-full h-auto overflow-visible select-none"
+              >
+                <defs>
+                  <linearGradient id="royalGoldSmoothFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.28" />
+                    <stop offset="100%" stopColor="#D4AF37" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                {[0, 0.25, 0.5, 0.75, 1].map((step) => {
+                  const y = padT + step * innerH;
+                  const val = maxCurveVal - step * (maxCurveVal - minCurveVal);
+                  return (
+                    <g key={step}>
+                      <line
+                        x1={padL}
+                        y1={y}
+                        x2={chartW - padR}
+                        y2={y}
+                        stroke={isDark ? 'rgba(212,175,55,0.12)' : 'rgba(15,23,42,0.08)'}
+                        strokeWidth="1"
+                      />
+                      <text
+                        x={padL - 8}
+                        y={y + 3}
+                        textAnchor="end"
+                        fill={isDark ? '#94a3b8' : '#64748b'}
+                        fontSize="10"
+                        className="font-mono"
+                      >
+                        {val.toFixed(0)}
+                      </text>
+                    </g>
+                  );
+                })}
+
+                {primaryAreaPath && <path d={primaryAreaPath} fill="url(#royalGoldSmoothFill)" />}
+
+                <path
+                  d={secondaryBezier}
+                  fill="none"
+                  stroke="#38BDF8"
+                  strokeWidth="1.75"
+                  strokeDasharray="4 4"
+                />
+
+                <path
+                  d={primaryBezier}
+                  fill="none"
+                  stroke="#D4AF37"
+                  strokeWidth="2.6"
+                  strokeLinecap="round"
+                />
+
+                {primaryCoords.map((c, idx) => {
+                  const sec = secondaryCoords[idx];
+                  return (
+                    <g key={c.pt.label}>
+                      <line
+                        x1={c.x}
+                        y1={c.y}
+                        x2={c.x}
+                        y2={padT + innerH}
+                        stroke="rgba(212,175,55,0.12)"
+                        strokeWidth="1"
+                      />
+                      <circle
+                        cx={sec.x}
+                        cy={sec.y}
+                        r="3"
+                        fill="#050914"
+                        stroke="#38BDF8"
+                        strokeWidth="1.5"
+                      />
+                      <circle
+                        cx={c.x}
+                        cy={c.y}
+                        r="4"
+                        fill="#050914"
+                        stroke="#F5D061"
+                        strokeWidth="2.2"
+                      />
+                      <text
+                        x={c.x}
+                        y={c.y - 10}
+                        textAnchor="middle"
+                        fill={isDark ? '#F8FAFC' : '#0f172a'}
+                        fontSize="10"
+                        fontWeight="700"
+                        className="font-mono"
+                      >
+                        {c.pt.primary}
+                        {activeCurve.unit === '%' ? '%' : ''}
+                      </text>
+                      <text
+                        x={c.x}
+                        y={padT + innerH + 18}
+                        textAnchor="middle"
+                        fill={isDark ? '#CBD5E1' : '#475569'}
+                        fontSize="10"
+                        className="font-mono"
+                      >
+                        {c.pt.label}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
+            </div>
+
+            <div className="pt-3 border-t border-[#D4AF37]/20 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300">
+              <div className="flex items-center gap-5">
+                <span className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#D4AF37] glow-dot-gold" />
+                  <span>
+                    {lang === 'vi' ? activeCurve.primaryLabelVi : activeCurve.primaryLabelEn}
+                  </span>
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="w-3 h-0.5 bg-sky-400 inline-block" />
+                  <span>
+                    {lang === 'vi' ? activeCurve.secondaryLabelVi : activeCurve.secondaryLabelEn}
+                  </span>
+                </span>
               </div>
-              <span className="font-medium text-zinc-300">
-                HalaMadrid — All-Time Real Madrid Intelligence (1902–2026/27)
+              <span className="font-mono text-[11px] text-[#F5D061]">
+                Cubic-Bezier Spline • Opta Verified
               </span>
             </div>
-            <div className="font-mono text-[11px] text-zinc-500">
-              Ember Minimalist Dark UI • Inter & JetBrains Mono • Synced 27/10/2026
+          </div>
+
+          {/* Right 4-Col Card: 2026/27 Featured Spotlight Quartet */}
+          <div className="lg:col-span-4 glass-royal rounded-2xl p-5 flex flex-col justify-between">
+            <div className="flex items-center justify-between pb-3.5 border-b border-[#D4AF37]/20">
+              <div>
+                <h2 className="font-royal text-sm font-bold text-[#F8FAFC]">
+                  {lang === 'vi' ? 'Trụ Cột Đội Hình 2026/27' : '2026/27 Core Spotlight'}
+                </h2>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  {lang === 'vi'
+                    ? 'Click vào cầu thủ để mở Hồ sơ 12 trường'
+                    : 'Click any player to inspect full profile'}
+                </p>
+              </div>
+              <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#F5D061]">
+                BMV + #25
+              </span>
+            </div>
+
+            <div className="my-3 space-y-2.5">
+              {featuredStars.map((star) => (
+                <div
+                  key={star.id}
+                  onClick={() => setHeroSelectedPlayer(star)}
+                  className="p-2.5 rounded-xl bg-[#050914]/85 hover:bg-[#101A33] border border-[#D4AF37]/25 hover:border-[#D4AF37] transition-all cursor-pointer flex items-center justify-between gap-3 group"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-11 h-11 rounded-lg overflow-hidden bg-[#0B1224] border border-[#D4AF37]/35 shrink-0">
+                      <PlayerAvatar
+                        src={star.imageUrl}
+                        name={star.name}
+                        shirtNumber={star.shirtNumber}
+                        position={star.specificPositions.join('/')}
+                        priority
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-xs font-bold text-[#F5D061]">
+                          #{star.shirtNumber}
+                        </span>
+                        <span className="text-xs font-bold text-[#F8FAFC] truncate group-hover:text-[#F5D061] transition-colors">
+                          {star.name}
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-slate-400 flex items-center gap-1.5 mt-0.5">
+                        <CountryFlag nationality={star.nationality} />
+                        <span className="font-mono text-[10px] text-slate-300">
+                          {star.specificPositions.join('/')}
+                        </span>
+                        <span className="text-slate-600">•</span>
+                        <span className="font-mono text-[10px] text-[#F5D061]">
+                          {star.stats.topSpeedKmh.toFixed(1)} km/h
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-right shrink-0">
+                    <div className="font-mono text-xs font-bold text-[#F8FAFC]">
+                      {star.stats.appearances}M • {star.stats.goals}G • {star.stats.assists}A
+                    </div>
+                    <div className="font-mono text-[10px] text-emerald-400 mt-0.5 flex items-center justify-end gap-0.5">
+                      <span>{star.stats.gaPer90.toFixed(2)} G+A/90</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-[#D4AF37]/20 flex items-center justify-between text-xs">
+              <a
+                href="#squad"
+                onClick={(e) => handleNavClick(e, '#squad')}
+                className="text-[#F5D061] hover:text-white font-semibold flex items-center gap-1"
+              >
+                <span>{lang === 'vi' ? 'Xem toàn bộ 32 cầu thủ' : 'View all 32 squad players'}</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+              <span className="font-mono text-[11px] text-slate-400">+ 42 Legends</span>
             </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </section>
+
+      {/* ==========================================================================
+         MAIN INTERACTIVE ENCYCLOPEDIA & DATA SCIENCE SECTIONS
+         ========================================================================== */}
+      <main className="flex-1">
+        {/* 1. Historical Timeline 1902–2026 & Bernabéu Evolution */}
+        <TimelineSection eras={dataset.historicalEras} lang={lang} />
+
+        {/* 2. Match Logs (15 UCL Finals & 2D Tactical Pitch Blueprints) */}
+        <TrophyMuseumSection uclTitles={dataset.championsLeagueTitles} lang={lang} />
+
+        {/* 3 & 4. Squad (32 + 42 Legends) & Player Stats (6-Axis Radar, EDA Lab & Matrix) */}
+        <LegendsSquadLabSection
+          players={dataset.players}
+          tridentAnalytics={dataset.trident2026Analytics}
+          lang={lang}
+          externalCommand={squadLabCommand}
+        />
+
+        {/* 5. Transfers & Squad Acquisition Ledger (2024–2026/27) */}
+        <section
+          id="transfers"
+          className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#D4AF37]/20 scroll-mt-20"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+            <div>
+              <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#F5D061] mb-1.5">
+                <GitCommit className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <span>TRANSFERS &amp; SQUAD ACQUISITION LEDGER (2024–2026/27)</span>
+              </div>
+              <h2 className="font-royal text-2xl sm:text-3xl font-bold text-[#F8FAFC] tracking-tight">
+                {lang === 'vi'
+                  ? 'Hồ Sơ Chuyển Nhượng & Định Giá Đội Hình 2024–2026/27'
+                  : 'Strategic Transfers & Valuation Matrix (2024–2026/27)'}
+              </h2>
+            </div>
+            <div className="font-mono text-xs text-slate-300 glass-royal rounded-xl px-3.5 py-2">
+              Total Tracked Arrivals: <span className="text-[#F5D061] font-bold">10 Players</span>
+            </div>
+          </div>
+
+          <div className="glass-royal rounded-2xl overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="border-b border-[#D4AF37]/25 text-[11px] font-mono uppercase text-[#F5D061] bg-[#050914]/90">
+                    <th className="py-3.5 px-4">{lang === 'vi' ? 'Cầu thủ' : 'Player'}</th>
+                    <th className="py-3.5 px-3">{lang === 'vi' ? 'Vị trí' : 'Pos'}</th>
+                    <th className="py-3.5 px-3">{lang === 'vi' ? 'Kỳ CN' : 'Window'}</th>
+                    <th className="py-3.5 px-3">{lang === 'vi' ? 'CLB Cũ' : 'Previous Club'}</th>
+                    <th className="py-3.5 px-3">{lang === 'vi' ? 'Hình thức / Phí' : 'Fee / Type'}</th>
+                    <th className="py-3.5 px-3">{lang === 'vi' ? 'Định giá' : 'Market Val'}</th>
+                    <th className="py-3.5 px-3 text-right">
+                      {lang === 'vi' ? 'Thống kê RM (Tr/B/KT/Cúp)' : 'RM Stats (M/G/A/T)'}
+                    </th>
+                    <th className="py-3.5 px-4 text-right">G+A/90</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#D4AF37]/15">
+                  {strategicTransfers.map((item) => (
+                    <tr
+                      key={item.id}
+                      onClick={() => setHeroSelectedPlayer(item.player)}
+                      className="hover:bg-white/[0.04] cursor-pointer transition-colors"
+                    >
+                      <td className="py-3 px-4 font-medium text-[#F8FAFC] flex items-center gap-2.5 whitespace-nowrap">
+                        <span className="font-mono text-xs text-[#F5D061] font-bold w-7">
+                          #{item.player.shirtNumber}
+                        </span>
+                        <CountryFlag nationality={item.player.nationality} />
+                        <span className="font-semibold">{item.player.name}</span>
+                      </td>
+                      <td className="py-3 px-3 font-mono text-slate-300 whitespace-nowrap">
+                        {item.player.specificPositions.join('/')}
+                      </td>
+                      <td className="py-3 px-3 font-mono text-slate-400 whitespace-nowrap">
+                        {item.window}
+                      </td>
+                      <td className="py-3 px-3 text-slate-300 whitespace-nowrap">{item.from}</td>
+                      <td className="py-3 px-3 font-mono text-slate-300 whitespace-nowrap">
+                        {item.fee}
+                      </td>
+                      <td className="py-3 px-3 font-mono text-emerald-400 font-semibold whitespace-nowrap">
+                        {item.val}
+                      </td>
+                      <td className="py-3 px-3 font-mono text-[#F8FAFC] text-right whitespace-nowrap">
+                        {item.player.stats.appearances}M • {item.player.stats.goals}G •{' '}
+                        {item.player.stats.assists}A • {item.player.stats.trophies}T
+                      </td>
+                      <td className="py-3 px-4 font-mono text-[#F5D061] font-semibold text-right whitespace-nowrap">
+                        {item.player.stats.gaPer90.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* El Clásico & Stoppage-Time Remontada Analytics */}
+        <ClasicoRemontadaSection
+          clasicoHistory={dataset.elClasicoHistory}
+          remontadaAnalytics={dataset.remontadaAnalytics}
+          headToHead={dataset.metadata.elClasicoHeadToHead}
+          lang={lang}
+        />
+
+        {/* 6. Tactical Reports & 10,000-Match Monte Carlo Simulator */}
+        <TacticalMonteCarloSection
+          players={dataset.players}
+          monteCarlo={dataset.monteCarloSimulation}
+          lang={lang}
+        />
+
+        {/* Club Institutional Culture & Leadership */}
+        <Madridista101Section leaders={dataset.clubLeaders} lang={lang} />
+      </main>
+
+      {/* 2-COLUMN PLAYER PROFILE MODAL */}
+      {heroSelectedPlayer && (
+        <PlayerWalkoutModal
+          player={heroSelectedPlayer}
+          lang={lang}
+          onClose={() => setHeroSelectedPlayer(null)}
+        />
+      )}
+
+      {/* COMMAND PALETTE MODAL [⌘ K] */}
+      {cmdOpen && (
+        <div
+          onClick={() => setCmdOpen(false)}
+          className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm flex items-start justify-center pt-24 px-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-xl bg-[#0B1224] border border-[#D4AF37]/40 rounded-2xl shadow-2xl overflow-hidden"
+          >
+            <div className="px-4 py-3 border-b border-[#D4AF37]/25 flex items-center gap-3">
+              <Search className="w-4 h-4 text-[#F5D061] shrink-0" />
+              <input
+                type="text"
+                autoFocus
+                value={cmdQuery}
+                onChange={(e) => setCmdQuery(e.target.value)}
+                placeholder={
+                  lang === 'vi'
+                    ? 'Nhập tên cầu thủ, số áo (#10, #7, #5, #12...) hoặc vị trí...'
+                    : 'Search player name, shirt number (#10, #7, #5...), or position...'
+                }
+                className="w-full bg-transparent text-sm text-[#F8FAFC] placeholder-slate-400 focus:outline-none"
+              />
+              <kbd className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#050914] border border-[#D4AF37]/30 text-[#F5D061]">
+                ESC
+              </kbd>
+            </div>
+
+            <div className="max-h-80 overflow-y-auto p-2 space-y-1">
+              {searchResults.map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => {
+                    setHeroSelectedPlayer(p);
+                    setCmdOpen(false);
+                  }}
+                  className="w-full px-3 py-2 rounded-xl hover:bg-white/[0.07] flex items-center justify-between gap-3 text-left transition-colors"
+                >
+                  <span className="flex items-center gap-2.5 min-w-0">
+                    <span className="font-mono text-xs font-bold text-[#F5D061] w-7">
+                      #{p.shirtNumber}
+                    </span>
+                    <CountryFlag nationality={p.nationality} />
+                    <span className="text-xs font-semibold text-[#F8FAFC] truncate">{p.name}</span>
+                    <span className="font-mono text-[10px] text-slate-400">
+                      {p.specificPositions.join('/')}
+                    </span>
+                  </span>
+                  <span className="font-mono text-xs text-slate-300 shrink-0">
+                    {p.stats.appearances}M • {p.stats.goals}G • {p.stats.assists}A
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ROYAL BERNABÉU EDITORIAL FOOTER */}
+      <footer className="bg-[#050914] border-t border-[#D4AF37]/25 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-lg bg-[#0B1224] border border-[#D4AF37]/40 flex items-center justify-center">
+              <Crown className="w-4 h-4 text-[#F5D061]" />
+            </div>
+            <span className="font-royal font-bold text-[#F8FAFC] tracking-wide">
+              HALAMADRID VN — Royal Bernabéu Editorial &amp; Opta Tactical Archive (1902–2026/27)
+            </span>
+          </div>
+          <div className="font-mono text-[11px] text-[#F5D061]">
+            Midnight Royal Navy #050914 • Cinzel &amp; JetBrains Mono • 15 UCL La Decimoquinta
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

@@ -3,65 +3,82 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   1. EMBER MINIMALIST DARK UI (LINEAR / VERCEL DESIGN SYSTEM)
+   1. ROYAL BERNABÉU EDITORIAL & OPTA TACTICAL UI DESIGN SYSTEM
    ========================================================================== */
 :root {
   color-scheme: dark;
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Cinzel', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  --bg-primary: #0a0a0a;
-  --bg-sidebar: #0d0d0d;
-  --bg-card: #121212;
-  --bg-interactive: rgba(255, 255, 255, 0.07);
-  --border-hairline: rgba(255, 255, 255, 0.07);
-  --border-hover: rgba(255, 255, 255, 0.14);
-  --text-primary: #ededed;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --ember-accent: #f97316;
+  /* Royal Bernabéu Palette */
+  --bg-primary: #050914;
+  --bg-sapphire: rgba(11, 18, 36, 0.9);
+  --bg-elevated: #101a33;
+  --border-royal-gold: rgba(212, 175, 55, 0.25);
+  --border-royal-gold-hover: rgba(212, 175, 55, 0.55);
+  --royal-gold: #d4af37;
+  --royal-gold-light: #f5d061;
+  --royal-blue: #1d4ed8;
+  --bernabeu-white: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 
   /* Motion Tokens */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
   --ease-spring-subtle: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --dur-micro: 160ms;
-  --dur-component: 280ms;
-  --dur-section: 400ms;
 }
 
 html,
 body {
-  background-color: #0a0a0a;
-  color: #ededed;
+  background-color: #050914;
+  background-image:
+    radial-gradient(ellipse 80% 45% at 50% -10%, rgba(29, 78, 216, 0.24), transparent 70%),
+    radial-gradient(ellipse 55% 32% at 50% 0%, rgba(212, 175, 55, 0.14), transparent 65%);
+  background-attachment: fixed;
+  color: #f8fafc;
   font-family: var(--font-sans);
   overflow-x: hidden;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 200ms ease, color 200ms ease;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+::selection {
+  background-color: rgba(212, 175, 55, 0.3);
+  color: #f8fafc;
 }
 
 html.light-mode,
 html.light-mode body {
   color-scheme: light;
   background-color: #f8fafc !important;
+  background-image:
+    radial-gradient(ellipse 80% 45% at 50% -10%, rgba(29, 78, 216, 0.08), transparent 70%),
+    radial-gradient(ellipse 55% 32% at 50% 0%, rgba(212, 175, 55, 0.1), transparent 65%) !important;
   color: #0f172a !important;
 }
 
-/* Default UI Typography: Inter */
+/* Editorial & UI Typography */
 body,
 button,
 input,
 select,
 textarea,
-.font-sans,
-.font-serif,
-.font-royal {
+.font-sans {
   font-family: var(--font-sans);
 }
 
-/* Quantitative Statistics, Scores, Percentages & Metrics: JetBrains Mono */
+.font-royal,
+.font-serif,
+.editorial-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+/* Quantitative Statistics, xG, G+A/90, Chi-Square & Scores: JetBrains Mono */
 .font-mono,
 code,
 pre,
@@ -74,184 +91,148 @@ td:not(:first-child),
   letter-spacing: -0.02em;
 }
 
-/* Automatically style large KPI & stat numbers across modules in JetBrains Mono */
-.glass-royal .text-2xl,
-.glass-royal .text-3xl,
-.glass-royal .text-4xl,
-.glass-gold .text-2xl,
-.glass-gold .text-3xl,
-.bento-card .text-2xl,
-.bento-card .text-3xl,
-.bento-card .text-4xl {
-  font-family: var(--font-mono) !important;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
+/* ==========================================================================
+   2. DEEP SAPPHIRE GLASS (#0B1224/90) & ROYAL GOLD HAIRLINE BORDERS
+   ========================================================================== */
+.glass-royal,
+.bento-card {
+  background: linear-gradient(165deg, rgba(16, 26, 51, 0.92) 0%, rgba(11, 18, 36, 0.92) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 1rem;
+  box-shadow:
+    0 18px 42px -18px rgba(2, 6, 23, 0.85),
+    inset 0 1px 0 0 rgba(248, 250, 252, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-/* ==========================================================================
-   2. EMBER DARK SURFACE & BENTO CARD SYSTEM (#0A0A0A / #0D0D0D / #121212)
-   ========================================================================== */
-.bento-card,
-.glass-royal,
 .glass-gold {
-  background-color: #121212 !important;
-  background-image: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.07) !important;
-  border-radius: 0.75rem !important; /* rounded-xl */
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background: linear-gradient(145deg, rgba(28, 38, 68, 0.94) 0%, rgba(11, 18, 36, 0.95) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: 1rem;
+  box-shadow:
+    0 20px 50px -15px rgba(212, 175, 55, 0.14),
+    inset 0 1px 0 0 rgba(245, 208, 97, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .bento-card:hover,
 .glass-royal.royal-card-hover:hover {
-  border-color: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow:
+    0 22px 48px -16px rgba(29, 78, 216, 0.28),
+    0 0 24px -8px rgba(212, 175, 55, 0.22);
 }
 
-/* Normalize legacy navy backgrounds inside sub-sections to Ember Minimalist Dark */
+/* Royal Collector Player Card Styling */
+.royal-collector-card {
+  position: relative;
+  background: linear-gradient(165deg, rgba(16, 28, 58, 0.95) 0%, rgba(7, 13, 28, 0.96) 65%, rgba(19, 28, 52, 0.96) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  box-shadow:
+    0 16px 36px -14px rgba(2, 6, 23, 0.9),
+    inset 0 1px 0 0 rgba(245, 208, 97, 0.18);
+  transition: transform 280ms var(--ease-out-expo),
+    border-color 280ms var(--ease-out-expo),
+    box-shadow 280ms var(--ease-out-expo);
+}
+
+.royal-collector-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(245, 208, 97, 0.72);
+  box-shadow:
+    0 24px 50px -16px rgba(29, 78, 216, 0.38),
+    0 0 28px -6px rgba(212, 175, 55, 0.32);
+}
+
+/* Harmonize legacy neutral dark classes inside sub-components to Royal Bernabéu Sapphire */
+.bg-\[\#0A0A0A\],
 .bg-\[\#060913\],
 .bg-\[\#060A17\],
 .bg-\[\#04060D\],
-.bg-\[\#040812\],
-.bg-\[\#050914\] {
-  background-color: #0a0a0a !important;
+.bg-\[\#040812\] {
+  background-color: #050914;
 }
 
-.bg-\[\#0D1326\],
-.bg-\[\#0D1326\]\/90,
-.bg-\[\#0D1326\]\/80,
-.bg-\[\#080E20\],
-.bg-\[\#090E1E\],
-.bg-\[\#090F22\],
-.bg-\[\#0B1120\] {
-  background-color: #121212 !important;
-  border-color: rgba(255, 255, 255, 0.07) !important;
-}
-
-.bg-\[\#060913\]\/90,
-.bg-\[\#060913\]\/85,
-.bg-\[\#060913\]\/80,
-.bg-\[\#060913\]\/70,
-.bg-\[\#060913\]\/60 {
-  background-color: #0e0e0e !important;
-  border-color: rgba(255, 255, 255, 0.07) !important;
-}
-
-.bg-\[\#16203D\],
-.bg-\[\#16203D\]\/90,
-.bg-\[\#16203D\]\/70,
-.bg-\[\#16203D\]\/60 {
-  background-color: rgba(255, 255, 255, 0.07) !important;
-  border-color: rgba(255, 255, 255, 0.09) !important;
-}
-
-/* Hairline 1px borders across all modules */
-.border-white\/10,
-.border-white\/15,
-.border-white\/5,
-.border-\[\#D4AF37\]\/35,
-.border-\[\#D4AF37\]\/40,
-.border-\[\#D4AF37\]\/30,
-.border-\[\#D4AF37\]\/25,
-.border-\[\#D4AF37\]\/50,
-.border-\[\#D4AF37\]\/55,
-.border-\[\#D4AF37\]\/60 {
-  border-color: rgba(255, 255, 255, 0.07) !important;
-}
-
-/* Remove loud gradients and convert CTA buttons to sleek Linear/Vercel Minimalist style */
-.bg-gradient-to-r.from-\[\#D4AF37\].to-\[\#F5D061\],
-.bg-gradient-to-br.from-\[\#F5D061\].to-\[\#D4AF37\],
-.bg-\[\#D4AF37\] {
-  background-image: none !important;
-  background-color: #ededed !important;
-  color: #0a0a0a !important;
-  box-shadow: none !important;
-}
-
-.bg-gradient-to-r.from-\[\#D4AF37\].to-\[\#F5D061\]:hover,
-.bg-\[\#D4AF37\]:hover {
-  background-color: #ffffff !important;
-}
-
-/* Refined Ember & Monochrome Accent Text */
-.text-\[\#F5D061\],
-.text-\[\#D4AF37\] {
-  color: #f4f4f5 !important;
+.bg-\[\#121212\],
+.bg-\[\#0D0D0D\],
+.bg-\[\#141414\] {
+  background-color: rgba(11, 18, 36, 0.9);
 }
 
 /* Tactical Pitch & Modal Surfaces */
 .pitch-node-badge {
-  background-color: #121212 !important;
-  color: #f4f4f5 !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  background-color: rgba(5, 9, 20, 0.92);
+  color: #f8fafc;
+  border: 1px solid rgba(212, 175, 55, 0.45);
   font-family: var(--font-mono) !important;
-  font-weight: 600 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.75) !important;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.85);
 }
 
 .pitch-top-banner {
-  background-color: #121212 !important;
-  color: #ededed !important;
-  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  background-color: rgba(11, 18, 36, 0.92);
+  color: #f8fafc;
+  border: 1px solid rgba(212, 175, 55, 0.35);
 }
 
-.pitch-top-banner span {
-  color: #ededed !important;
-}
-
-/* Dedicated 2-Column Profile Modal (Ember Minimalist #121212) */
+/* Dedicated 2-Column Profile Modal (Royal Sapphire & Gold) */
 .profile-modal-surface {
-  background-color: #121212 !important;
-  color: #ededed !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 0.75rem !important;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.85) !important;
+  background: linear-gradient(160deg, #0d162e 0%, #060b18 100%) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(212, 175, 55, 0.38) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 32px 90px rgba(2, 6, 23, 0.92), 0 0 40px rgba(212, 175, 55, 0.12) !important;
 }
 
 .profile-modal-box {
-  background-color: #0d0d0d !important;
-  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  background-color: rgba(11, 18, 36, 0.85) !important;
+  border: 1px solid rgba(212, 175, 55, 0.22) !important;
   border-radius: 0.75rem !important;
 }
 
 .profile-modal-title {
-  color: #fafafa !important;
+  color: #f8fafc !important;
 }
 
 .profile-modal-body {
-  color: #d4d4d8 !important;
+  color: #e2e8f0 !important;
 }
 
 .profile-modal-muted {
-  color: #71717a !important;
+  color: #94a3b8 !important;
 }
 
 .profile-modal-gold {
-  color: #f97316 !important;
+  color: #f5d061 !important;
 }
 
 /* ==========================================================================
-   3. GLOWING STATUS DOTS & MICRO-ANIMATIONS
+   3. GLOWING STATUS DOTS & OPTA TACTICAL ANIMATIONS
    ========================================================================== */
+.glow-dot-gold {
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.85);
+}
+
 .glow-dot-ember {
-  box-shadow: 0 0 8px rgba(249, 115, 22, 0.75);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
 }
 
 .glow-dot-emerald {
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.75);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
 }
 
 .glow-dot-sky {
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.75);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
 }
 
 .glow-dot-violet {
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.75);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
 }
 
 .glow-dot-amber {
-  box-shadow: 0 0 8px rgba(245, 158, 11, 0.75);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
 }
 
 @keyframes pitchPassGlow {
@@ -270,7 +251,7 @@ td:not(:first-child),
 
 @keyframes sparklineDraw {
   0% {
-    stroke-dashoffset: 200;
+    stroke-dashoffset: 220;
   }
   100% {
     stroke-dashoffset: 0;
@@ -278,15 +259,15 @@ td:not(:first-child),
 }
 
 .animate-sparkline-draw {
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
   animation: sparklineDraw 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes bentoEntranceUp {
   0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   100% {
     opacity: 1;
@@ -296,7 +277,7 @@ td:not(:first-child),
 
 .animate-bento-entrance {
   opacity: 0;
-  animation: bentoEntranceUp 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: bentoEntranceUp 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes scoreFlipIn {
@@ -345,21 +326,21 @@ td:not(:first-child),
 }
 
 .royal-card-hover {
-  transition: transform 200ms var(--ease-out-expo),
-    border-color 200ms var(--ease-out-expo),
-    background-color 200ms var(--ease-in-out-quart);
+  transition: transform 240ms var(--ease-out-expo),
+    border-color 240ms var(--ease-out-expo),
+    box-shadow 240ms var(--ease-out-expo);
 }
 
 .royal-card-hover:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .royal-portrait-zoom {
-  transition: transform 320ms var(--ease-out-expo);
+  transition: transform 360ms var(--ease-out-expo);
 }
 
 .group:hover .royal-portrait-zoom {
-  transform: scale(1.025);
+  transform: scale(1.04);
 }
 
 .pitch-node-glide {
@@ -372,60 +353,56 @@ td:not(:first-child),
   transition: width 380ms var(--ease-out-expo);
 }
 
-.heavy-section-deferred {
-  position: relative;
-}
-
-/* Focus Ring */
+/* Focus Ring in Royal Gold */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.35);
+  outline: 1px solid #d4af37;
   outline-offset: 2px;
 }
 
-/* Minimalist Scrollbar */
+/* Royal Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #050914;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: rgba(212, 175, 55, 0.32);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #404040;
+  background: rgba(212, 175, 55, 0.6);
 }
 
 /* ==========================================================================
-   4. HIGH-CONTRAST LIGHT MODE SYSTEM (#F8FAFC / #FFFFFF / SLATE-900)
+   4. BERNABÉU DAYLIGHT / WHITE KIT MODE (LIGHT MODE SUPPORT)
    ========================================================================== */
+html.light-mode .bg-\[\#050914\],
 html.light-mode .bg-\[\#0A0A0A\],
 html.light-mode .bg-\[\#060913\],
 html.light-mode .bg-\[\#060A17\],
 html.light-mode .bg-\[\#04060D\],
-html.light-mode .bg-\[\#040812\],
-html.light-mode .bg-\[\#050914\] {
+html.light-mode .bg-\[\#040812\] {
   background-color: #f8fafc !important;
 }
 
-html.light-mode .bg-\[\#0D0D0D\] {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
+html.light-mode .bg-\[\#0B1224\],
+html.light-mode .bg-\[\#0B1224\]\/90,
+html.light-mode .bg-\[\#0B1224\]\/95,
+html.light-mode .bg-\[\#0D0D0D\],
 html.light-mode .bg-\[\#121212\],
 html.light-mode .bg-\[\#141414\],
 html.light-mode .bento-card,
 html.light-mode .glass-royal,
 html.light-mode .glass-gold,
+html.light-mode .royal-collector-card,
 html.light-mode .bg-\[\#0D1326\],
 html.light-mode .bg-\[\#0D1326\]\/90,
 html.light-mode .bg-\[\#0D1326\]\/80,
@@ -433,51 +410,22 @@ html.light-mode .bg-\[\#080E20\],
 html.light-mode .bg-\[\#090E1E\],
 html.light-mode .bg-\[\#090F22\],
 html.light-mode .bg-\[\#0B1120\] {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
-}
-
-html.light-mode .bg-\[\#060913\]\/90,
-html.light-mode .bg-\[\#060913\]\/85,
-html.light-mode .bg-\[\#060913\]\/80,
-html.light-mode .bg-\[\#060913\]\/70,
-html.light-mode .bg-\[\#060913\]\/60,
-html.light-mode .bg-\[\#16203D\],
-html.light-mode .bg-\[\#16203D\]\/90,
-html.light-mode .bg-\[\#16203D\]\/70,
-html.light-mode .bg-\[\#16203D\]\/60 {
-  background-color: #f1f5f9 !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light-mode .border-white\/\[0\.07\],
-html.light-mode .border-white\/\[0\.08\],
-html.light-mode .border-white\/\[0\.12\],
-html.light-mode .border-white\/10,
-html.light-mode .border-white\/15,
-html.light-mode .border-white\/5,
-html.light-mode .border-\[\#D4AF37\]\/35,
-html.light-mode .border-\[\#D4AF37\]\/40,
-html.light-mode .border-\[\#D4AF37\]\/30,
-html.light-mode .border-\[\#D4AF37\]\/25,
-html.light-mode .border-\[\#D4AF37\]\/50,
-html.light-mode .border-\[\#D4AF37\]\/55,
-html.light-mode .border-\[\#D4AF37\]\/60 {
-  border-color: #e2e8f0 !important;
-}
-
-html.light-mode .divide-white\/\[0\.07\] > :not([hidden]) ~ :not([hidden]) {
-  border-color: #e2e8f0 !important;
+  background: #ffffff !important;
+  border-color: rgba(180, 138, 30, 0.32) !important;
+  box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.08) !important;
 }
 
 html.light-mode .text-white,
+html.light-mode .text-\[\#F8FAFC\],
 html.light-mode .text-\[\#EDEDED\],
 html.light-mode .text-zinc-100,
-html.light-mode .text-slate-100,
-html.light-mode .text-\[\#F5D061\],
-html.light-mode .text-\[\#D4AF37\] {
+html.light-mode .text-slate-100 {
   color: #0f172a !important;
+}
+
+html.light-mode .text-\[\#D4AF37\],
+html.light-mode .text-\[\#F5D061\] {
+  color: #9a7211 !important;
 }
 
 html.light-mode .text-zinc-200,
@@ -495,19 +443,10 @@ html.light-mode .text-slate-500 {
   color: #475569 !important;
 }
 
-html.light-mode .bg-white\/\[0\.07\],
-html.light-mode .bg-white\/\[0\.08\],
-html.light-mode .bg-white\/\[0\.06\],
-html.light-mode .bg-white\/\[0\.05\],
-html.light-mode .bg-white\/\[0\.04\] {
-  background-color: #f1f5f9 !important;
-}
-
 html.light-mode .profile-modal-surface {
-  background-color: #ffffff !important;
+  background: #ffffff !important;
   color: #0f172a !important;
-  border: 1px solid #cbd5e1 !important;
-  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.22) !important;
+  border: 1px solid rgba(180, 138, 30, 0.4) !important;
 }
 
 html.light-mode .profile-modal-box {
@@ -525,16 +464,4 @@ html.light-mode .profile-modal-body {
 
 html.light-mode .profile-modal-muted {
   color: #64748b !important;
-}
-
-html.light-mode ::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-html.light-mode ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-}
-
-html.light-mode ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
 }

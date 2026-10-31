@@ -1,4 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import {
   Activity,
   BarChart3,
@@ -13,6 +16,8 @@ import {
   Trophy,
   X,
 } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 import {
   Language,
   PlayerProfile,
@@ -146,6 +151,7 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
   ]);
   const [modalPlayer, setModalPlayer] = useState<PlayerProfile | null>(null);
   const [viewMode, setViewMode] = useState<'cards' | 'matrix'>('cards');
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   // Sync external navigation / Hero Stat Card / Sidebar Squad Tier commands
   useEffect(() => {
@@ -353,6 +359,32 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
     }).join(' ');
   };
 
+  // GSAP ScrollTrigger animation for Royal Collector Cards (gsap-react + gsap-scrolltrigger)
+  useGSAP(
+    () => {
+      const cards = gsap.utils.toArray<HTMLElement>('.royal-collector-card');
+      if (!cards.length) return;
+      gsap.fromTo(
+        cards,
+        { autoAlpha: 0, y: 24 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.035,
+          ease: 'power3.out',
+          overwrite: 'auto',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+    },
+    { scope: sectionRef, dependencies: [sectionTab, squadPosFilter, legendEraFilter, viewMode] }
+  );
+
   const renderPlayerCard = (player: PlayerProfile, showThreePeatBadge = false, idx = 0) => {
     const isCompared = comparedIds.includes(player.id);
     const isBellingham = player.id === 'jude-bellingham';
@@ -367,44 +399,54 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
         key={player.id}
         onClick={() => setModalPlayer(player)}
         style={{ '--stagger-delay': `${Math.min(idx * 40, 320)}ms` } as React.CSSProperties}
-        className={`royal-card-hover animate-card-stagger cursor-pointer group rounded-2xl overflow-hidden border flex flex-col justify-between ${
+        className={`royal-collector-card royal-card-hover cursor-pointer group rounded-2xl overflow-hidden border flex flex-col justify-between ${
           isBellingham
-            ? 'bg-gradient-to-b from-[#1A2442] to-[#0D1326] border-[#F5D061] shadow-[0_0_25px_rgba(212,175,55,0.22)]'
-            : 'bg-[#0D1326]/90 border-white/10 hover:border-[#D4AF37]/70'
+            ? 'bg-gradient-to-b from-[#1A2442] to-[#0B1224] border-[#F5D061] shadow-[0_0_28px_rgba(212,175,55,0.28)]'
+            : 'bg-[#0B1224]/90 border-[#D4AF37]/30 hover:border-[#F5D061]'
         }`}
       >
         <div>
-          {/* Portrait Header (object-fit: cover, object-position: top center) */}
-          <div className="keep-dark-surface relative h-72 w-full bg-[#060913] overflow-hidden">
-            <PlayerAvatar
-              src={player.imageUrl}
-              name={player.name}
-              shirtNumber={player.shirtNumber}
-              position={player.specificPositions.join(', ')}
-              className="w-full h-full object-cover object-[center_top] royal-portrait-zoom"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#060913] via-transparent to-black/15" />
+          {/* Portrait Header with Giant Watermark Shirt Number Behind */}
+          <div className="keep-dark-surface relative h-72 w-full bg-[#050914] overflow-hidden">
+            {/* Giant Oversized Watermark Jersey Number in Background */}
+            <div
+              aria-hidden="true"
+              className="font-royal absolute -right-2 top-6 text-[92px] leading-none font-black text-[#D4AF37]/[0.13] group-hover:text-[#F5D061]/[0.22] transition-colors select-none pointer-events-none z-0"
+            >
+              {player.shirtNumber}
+            </div>
+
+            <div className="relative z-[1] w-full h-full">
+              <PlayerAvatar
+                src={player.imageUrl}
+                name={player.name}
+                shirtNumber={player.shirtNumber}
+                position={player.specificPositions.join(', ')}
+                className="w-full h-full object-cover object-[center_top] royal-portrait-zoom"
+              />
+            </div>
+            <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#050914] via-[#050914]/20 to-transparent" />
 
             {/* Top Left Three-Peat Crown or Captain Badge if applicable */}
             {player.id === 'federico-valverde' ? (
-              <div className="absolute top-3 left-3 font-mono text-[11px] px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 backdrop-blur-sm shadow">
+              <div className="absolute top-3 left-3 z-[3] font-mono text-[11px] px-2 py-0.5 rounded-md bg-amber-500/15 text-[#F5D061] border border-[#D4AF37]/50 backdrop-blur-sm shadow">
                 {lang === 'vi' ? '(C) ĐỘI TRƯỞNG' : '(C) CAPTAIN'}
               </div>
             ) : (
               threePeatBadge && (
-                <div className="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-[#060913]/85 border border-[#D4AF37]/60 text-[#F5D061] font-extrabold text-[10px] uppercase tracking-wider shadow">
+                <div className="absolute top-3 left-3 z-[3] px-2 py-0.5 rounded-md bg-[#050914]/90 border border-[#D4AF37]/60 text-[#F5D061] font-extrabold text-[10px] uppercase tracking-wider shadow">
                   {lang === 'vi' ? 'ĂN 3 C1 🏆' : '3-PEAT UCL 🏆'}
                 </div>
               )
             )}
 
-            {/* Top Right Jersey Number Badge */}
-            <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-[#D4AF37] text-[#060913] font-extrabold text-xs shadow">
+            {/* Top Right Metallic Royal Gold Jersey Number Badge */}
+            <div className="absolute top-3 right-3 z-[3] px-2.5 py-1 rounded-lg bg-gradient-to-br from-[#F5D061] to-[#D4AF37] text-[#050914] font-mono font-extrabold text-xs shadow-md">
               #{player.shirtNumber}
             </div>
 
             {/* Bottom Name Overlay */}
-            <div className="absolute bottom-3 inset-x-3">
+            <div className="absolute bottom-3 inset-x-3 z-[3]">
               <div className="text-[11px] font-bold text-[#F5D061] flex items-center justify-between">
                 <span className="inline-flex items-center">
                   <CountryFlag nationality={player.nationality} />
@@ -412,14 +454,14 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
                     {player.positionGroup} • {player.specificPositions.join('/')}
                   </span>
                 </span>
-                <span>{player.era}</span>
+                <span className="font-mono text-[10px] text-slate-300">{player.era}</span>
               </div>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <h4 className="text-lg font-extrabold text-white leading-tight truncate">
+                <h4 className="font-royal text-lg font-extrabold text-[#F8FAFC] leading-tight truncate">
                   {player.name}
                 </h4>
                 {player.id === 'federico-valverde' && (
-                  <span className="font-mono text-[11px] px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+                  <span className="font-mono text-[11px] px-2 py-0.5 rounded-md bg-amber-500/15 text-[#F5D061] border border-[#D4AF37]/40 shrink-0">
                     {lang === 'vi' ? '(C) ĐỘI TRƯỞNG' : '(C) CAPTAIN'}
                   </span>
                 )}
@@ -434,12 +476,12 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
 
           {/* Quick Stats Grid */}
           <div className="p-4 space-y-3">
-            <div className="grid grid-cols-4 gap-1.5 text-center bg-[#060913]/70 rounded-xl p-2 border border-white/5">
+            <div className="grid grid-cols-4 gap-1.5 text-center bg-[#050914]/85 rounded-xl p-2 border border-[#D4AF37]/20">
               <div>
                 <div className="text-[10px] text-slate-400 font-semibold">
                   {lang === 'vi' ? 'Trận' : 'Apps'}
                 </div>
-                <div className="text-xs font-extrabold text-white">
+                <div className="font-mono text-xs font-extrabold text-[#F8FAFC]">
                   {player.stats.appearances}
                 </div>
               </div>
@@ -447,19 +489,19 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
                 <div className="text-[10px] text-slate-400 font-semibold">
                   {lang === 'vi' ? 'Bàn' : 'Goals'}
                 </div>
-                <div className="text-xs font-extrabold text-[#F5D061]">
+                <div className="font-mono text-xs font-extrabold text-[#F5D061]">
                   {player.stats.goals}
                 </div>
               </div>
               <div>
                 <div className="text-[10px] text-slate-400 font-semibold">G+A/90</div>
-                <div className="text-xs font-extrabold text-emerald-500">
+                <div className="font-mono text-xs font-extrabold text-emerald-400">
                   {player.stats.gaPer90.toFixed(2)}
                 </div>
               </div>
               <div>
                 <div className="text-[10px] text-slate-400 font-semibold">km/h</div>
-                <div className="text-xs font-extrabold text-sky-500">
+                <div className="font-mono text-xs font-extrabold text-sky-400">
                   {player.stats.topSpeedKmh.toFixed(1)}
                 </div>
               </div>
@@ -481,7 +523,7 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
             className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all flex items-center justify-center gap-1 whitespace-nowrap ${
               isCompared
                 ? 'bg-[#D4AF37]/25 border-[#F5D061] text-[#F5D061]'
-                : 'bg-[#16203D]/70 border-white/10 text-slate-300 hover:border-[#D4AF37]/50'
+                : 'bg-[#050914]/80 border-[#D4AF37]/25 text-slate-300 hover:border-[#D4AF37]/60'
             }`}
           >
             {isCompared ? <Check className="w-3.5 h-3.5" /> : <Sparkles className="w-3.5 h-3.5" />}
@@ -492,7 +534,7 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
               e.stopPropagation();
               setModalPlayer(player);
             }}
-            className="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5D061] text-[#060913] text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 shadow whitespace-nowrap"
+            className="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F5D061] hover:brightness-110 text-[#050914] text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 shadow whitespace-nowrap"
           >
             <span>{lang === 'vi' ? 'Xem Hồ Sơ' : 'View Profile'}</span>
           </button>
@@ -503,8 +545,9 @@ export const LegendsSquadLabSection: React.FC<LegendsSquadLabSectionProps> = ({
 
   return (
     <section
+      ref={sectionRef}
       id="datalab"
-      className="heavy-section-deferred py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10"
+      className="heavy-section-deferred py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#D4AF37]/20"
     >
       {/* Section Header & 2-Part Mode Switcher */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
